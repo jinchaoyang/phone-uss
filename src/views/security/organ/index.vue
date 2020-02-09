@@ -3,11 +3,8 @@
 
     <div class="query-form-box">
       <el-form :inline="true" :model="query" class="demo-form-inline">
-        <el-form-item label="姓名">
-          <el-input v-model="query.name" placeholder="姓名"></el-input>
-        </el-form-item>
-        <el-form-item label="用户名">
-           <el-input v-model="query.userName" placeholder="用户名"></el-input>
+        <el-form-item label="名称">
+          <el-input v-model="query.name" placeholder="名称"></el-input>
         </el-form-item>
     
         <el-form-item class="form-btns">
@@ -25,7 +22,7 @@
       fit
       highlight-current-row
     >
-      <el-table-column align="center" label="姓名" width="220">
+      <el-table-column align="center" label="aa" width="220">
         <template slot-scope="scope">
           {{ scope.$index }}
         </template>
