@@ -2,7 +2,7 @@
   <div class="app-container">
 
     <div class="query-form-box">
-      <el-form :inline="true" :model="query" class="demo-form-inline">
+      <el-form :inline="true" :model="query" >
         <el-form-item label="名称">
           <el-input v-model="query.name" placeholder="名称"></el-input>
         </el-form-item>
@@ -49,6 +49,7 @@
         </template>
       </el-table-column>
     </el-table>
+     
   </div>
 </template>
 
@@ -85,7 +86,9 @@ export default {
         this.list = response.data.items
         this.listLoading = false
       })
-    }
+    },
+  
+
   }
 }
 </script>

@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo} from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -28,12 +28,12 @@ const mutations = {
 }
 
 const actions = {
-  // user login
+  // 用户登录
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
+      login({ userName: username.trim(), password: password }).then(response => {
+        const { data } = response;
         commit('SET_TOKEN', data.token)
         setToken(data.token)
         resolve()
@@ -43,28 +43,9 @@ const actions = {
     })
   },
 
-  // get user info
-  getInfo({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
-        const { data } = response
 
-        if (!data) {
-          reject('Verification failed, please Login again.')
-        }
 
-        const { name, avatar } = data
-
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        resolve(data)
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },
-
-  // user logout
+  // 用户签出
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
@@ -75,6 +56,18 @@ const actions = {
       }).catch(error => {
         reject(error)
       })
+    })
+  },
+  // 获取用户基本信息
+  getInfo({commit}) {
+    return new Promise((resolve,reject) => {
+      getInfo(state.token).then(response=> {
+         const { data } = response;
+         commit('SET_NAME', data.name)
+         resolve();
+       }).catch(error => {
+         reject(error);
+       })
     })
   },
 

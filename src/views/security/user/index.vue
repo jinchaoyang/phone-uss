@@ -11,8 +11,8 @@
         </el-form-item>
     
         <el-form-item class="form-btns">
-          <el-button type="primary" @click="onSubmit" >查询</el-button>
-          <el-button type="success" @click="onSubmit" >新增</el-button>
+          <el-button type="primary" @click="fetchData"  size="small">查询</el-button>
+          <el-button type="success" @click="onSubmit"  size="small">新增</el-button>
         </el-form-item>
       </el-form>
 
@@ -27,18 +27,18 @@
     >
       <el-table-column align="center" label="姓名" width="220">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          {{ scope.row.name }}
         </template>
       </el-table-column>
     
       <el-table-column label="用户名" width="220" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
+          <span>{{ scope.row.userName }}</span>
         </template>
       </el-table-column>
       <el-table-column label="手机号" width="220" align="center">
         <template slot-scope="scope">
-          {{ scope.row.pageviews }}
+          {{ scope.row.mobile }}
         </template>
       </el-table-column>
       <el-table-column class-name="status-col" label="状态" width="220" align="center">
@@ -48,15 +48,27 @@
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="操作">
         <template slot-scope="scope">
-          <span>操作</span>
+          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
         </template>
       </el-table-column>
     </el-table>
+    <div class="pagination">
+        <el-pagination
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="query.pageNo"
+          :page-sizes="[15, 30, 50, 100]"
+          :page-size="query.size"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total">
+        </el-pagination>
+        </div>
   </div>
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { getList } from '@/api/user'
 
 export default {
   filters: {
@@ -73,8 +85,12 @@ export default {
     return {
       list: null,
       listLoading: true,
+      total: 0,
       query: {
-
+        name:'',
+        userName:'',
+        pageNo: 1,
+        pageSize: 15
       }
     }
   },
@@ -84,10 +100,23 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList().then(response => {
-        this.list = response.data.items
-        this.listLoading = false
+      getList(this.query).then(response => {
+        const { data } = response;
+        this.list = data.list;
+        this.total = data.total;
+        this.query.pageNo = data.pageNum;
+        this.query.pageSize = data.pageSize;
+        this.listLoading = false;
       })
+    },
+      handleSizeChange(val) {
+        console.log('xxxx');
+    },
+    handleCurrentChange(val) {
+    console.log('xxxx');
+    },
+    handleClick(row) {
+      console.log(row);
     }
   }
 }

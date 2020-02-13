@@ -1,6 +1,52 @@
 <template>
-  <div class="dashboard-container">
-    <div class="dashboard-text">name: {{ name }}</div>
+  <div class="app-container">
+    <el-row :gutter="15">
+    <el-col :span="8">
+    <el-card class="box-card">
+    <div slot="header" class="clearfix">
+      <span>名单统计</span>
+      <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+    </div>
+    <div v-for="o in 4" :key="o" class="text item">
+      {{'列表内容 ' + o }}
+    </div>
+  </el-card>
+  </el-col>
+  <el-col :span="8">
+      <el-card class="box-card"  :span="10">
+    <div slot="header" class="clearfix">
+      <span>黒名单拦截</span>
+      <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+    </div>
+    <div v-for="o in 4" :key="o" class="text item">
+      {{'列表内容 ' + o }}
+    </div>
+  </el-card>
+  </el-col>
+  <el-col :span="8">
+      <el-card class="box-card"  :span="10">
+    <div slot="header" class="clearfix">
+      <span>白名单拦截</span>
+      <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+    </div>
+    <div v-for="o in 4" :key="o" class="text item">
+      {{'列表内容 ' + o }}
+    </div>
+  </el-card>
+  </el-col>
+    <el-col :span="8">
+      <el-card class="box-card"  :span="10">
+    <div slot="header" class="clearfix">
+      <span>企业统计</span>
+      <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+    </div>
+    <div v-for="o in 4" :key="o" class="text item">
+      {{'列表内容 ' + o }}
+    </div>
+  </el-card>
+  </el-col>
+  </el-row>
+ 
   </div>
 </template>
 
@@ -8,7 +54,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'Dashboard',
+  name: 'Dashboard1',
   computed: {
     ...mapGetters([
       'name'
@@ -17,14 +63,26 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.dashboard {
-  &-container {
-    margin: 30px;
+<style>
+  .text {
+    font-size: 14px;
   }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
+
+  .item {
+    margin-bottom: 18px;
   }
-}
+ .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+  .clearfix:after {
+    clear: both
+  }
+ 
+
+  .box-card {
+    width: 100%;
+    margin-bottom:10px;
+  }
 </style>

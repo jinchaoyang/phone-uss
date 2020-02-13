@@ -1,24 +1,28 @@
 import request from '@/utils/request'
 
-export function login(data) {
+//获取用户列表
+export function getList(params) {
   return request({
-    url: '/vue-admin-template/user/login',
+    url: '/user/list',
+    method: 'get',
+    params: params 
+  })
+}
+
+export function save(data){
+  return request({
+    url: '/user',
     method: 'post',
     data
   })
 }
 
-export function getInfo(token) {
-  return request({
-    url: '/vue-admin-template/user/info',
-    method: 'get',
-    params: { token }
-  })
+export function getById(id){
+   return request({
+     url: '/user/'+id,
+     method: 'get'
+   })
 }
 
-export function logout() {
-  return request({
-    url: '/vue-admin-template/user/logout',
-    method: 'post'
-  })
-}
+
+
