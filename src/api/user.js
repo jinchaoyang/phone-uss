@@ -17,11 +17,35 @@ export function save(data){
   })
 }
 
+
+export function update(data){
+  return request({
+    url: '/user/'+ data.id,
+    method: 'put',
+    data
+  })
+}
+
 export function getById(id){
    return request({
      url: '/user/'+id,
      method: 'get'
    })
+}
+
+export function destroy(id){
+  return request({
+    url: '/user/'+id,
+    method: 'delete'
+  })
+}
+
+export function userNameCheck(params){
+  return request({
+    url: '/user/userNameCheck',
+    method: 'get',
+    params: params
+  })
 }
 
 

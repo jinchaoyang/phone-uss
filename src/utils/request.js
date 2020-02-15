@@ -13,7 +13,6 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    console.log('2222222222');
     // do something before request is sent
     if (store.getters.token) {
       // let each request carry token
@@ -25,7 +24,6 @@ service.interceptors.request.use(
     return config
   },
   error => {
-    console.log('333333333333');
     // do something with request error
     console.log(error) // for debug
     return Promise.reject(error)

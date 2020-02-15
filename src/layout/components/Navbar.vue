@@ -7,7 +7,8 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <span class="login-name">{{name}}</span>
+          <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar"> -->
           <!-- <i class="el-icon-caret-bottom" /> -->
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -44,7 +45,8 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
+      'avatar',
+      'name',
     ])
   },
   methods: {
@@ -119,6 +121,15 @@ export default {
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
+
+        .login-name{
+          display: block;
+          height: 40px;
+          line-height: 40px;
+          cursor: pointer;
+          font-weight: bold;
+          color:#808080;
+        }
 
         .user-avatar {
           cursor: pointer;

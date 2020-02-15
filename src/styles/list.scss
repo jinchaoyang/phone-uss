@@ -1,7 +1,7 @@
 .query-form-box{
-    border-bottom: 1px solid #e8e8e8;
     padding:10px 10px 0 10px;
     margin-bottom:15px;
+    box-shadow: 0 1px 4px rgba(0,21,41,0.08)
 }
 
 .query-form-box .el-form-item{
@@ -21,8 +21,44 @@
 
 .pagination{
     margin:10px 0;
+    text-align: right;
 }
 
 .el-table td, .el-table th{
     padding: 8px;
 }
+
+.el-drawer__header{
+    padding: 10px 20px;
+    font-weight: bold;
+    margin-bottom:20px;
+    box-shadow: 0 1px 4px rgba(0,21,41,0.08)
+    
+}
+
+:focus {
+    outline:0;
+}
+
+.el-tabs__item:focus.is-active.is-focus:not(:active) {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.drawer-form{
+    width:80%;
+    & .el-form-item__label , & .el-form-item__content{
+        font-weight: 400;
+        font-size: 14px;
+        color:#606266;
+    }
+   &.drawer-show .el-form-item{
+       margin-bottom: 0;
+   }
+}
+
+
+
+

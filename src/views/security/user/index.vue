@@ -12,7 +12,7 @@
     
         <el-form-item class="form-btns">
           <el-button type="primary" @click="fetchData"  size="small">查询</el-button>
-          <el-button type="success" @click="onSubmit"  size="small">新增</el-button>
+          <el-button type="success" @click="add()"  size="small">新增</el-button>
         </el-form-item>
       </el-form>
 
@@ -43,34 +43,53 @@
       </el-table-column>
       <el-table-column class-name="status-col" label="状态" width="220" align="center">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
+         {{scope.row.status}}
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="操作">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+          <el-button @click="show(scope.row)" type="text" size="small">查看</el-button>
+          <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
+          <el-button @click="destroy(scope.row)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <div class="pagination">
-        <el-pagination
-          background
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="query.pageNo"
-          :page-sizes="[15, 30, 50, 100]"
-          :page-size="query.size"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total">
-        </el-pagination>
-        </div>
+    <pb-pagination :pageNo="query.pageNo" :pageSize="query.pageSize" :total="total" @pageChange="pageChange"></pb-pagination>
+ 
+
+    <el-drawer
+  :title="drawer.title"
+  :visible.sync="addView"
+  destroy-on-close
+  direction="rtl"
+  size="50%">
+    <user-add @createSuccess="createSuccess"  :mode="drawer.mode"  :id="userId"></user-add>
+</el-drawer>
+
+<el-drawer
+  title="用户详情"
+  :visible.sync="showView"
+  direction="rtl"
+  size="50%">
+    <user-show :id="userId"></user-show>
+</el-drawer>
+
+
   </div>
 </template>
 
 <script>
-import { getList } from '@/api/user'
+import { getList , destroy} from '@/api/user'
+import userAdd from './add'
+import userShow from './show'
+import Pagination from '@/components/Pagination'
 
 export default {
+  components: {
+    'user-add': userAdd,
+    'user-show': userShow,
+    'pb-pagination': Pagination
+  },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -90,8 +109,16 @@ export default {
         name:'',
         userName:'',
         pageNo: 1,
-        pageSize: 15
+        pageSize: 10
+      },
+      addView: false,
+      showView: false,
+      userId: '',
+      drawer: {
+        mode:'add',
+        title: '新增'
       }
+    
     }
   },
   created() {
@@ -109,15 +136,58 @@ export default {
         this.listLoading = false;
       })
     },
-      handleSizeChange(val) {
-        console.log('xxxx');
+    pageChange(data){
+      if(data.pageNo){
+        this.query.pageNo = data.pageNo;
+      }else if(data.pageSize){
+        this.query.pageSize = data.pageSize
+      }
+      this.fetchData();
+      
     },
-    handleCurrentChange(val) {
-    console.log('xxxx');
+    createSuccess(){
+      let that = this;
+      that.addView = false;
+      that.fetchData();
     },
-    handleClick(row) {
-      console.log(row);
+    add(){
+      this.drawer.title = '新增';
+      this.drawer.mode = 'add';
+      this.addView = true;
+    },
+    /**
+     * 查看用户详情
+     */
+    show(row){
+      this.userId = row.id;
+      this.showView = true;
+    },
+    edit(row){
+      this.drawer.title = '编辑';
+      this.drawer.mode = 'update';
+      this.userId = row.id;
+      this.addView = true;
+    },
+    /**
+     * 删除
+     */
+    destroy(row){
+       this.$confirm('是否确认删除此记录?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          destroy(row.id).then(response => {
+            this.$message({
+              type: 'success',
+             message: '删除成功!'
+            });
+            this.fetchData();
+          })
+          
+        })
     }
+
   }
 }
 </script>
