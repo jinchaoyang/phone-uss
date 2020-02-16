@@ -48,7 +48,7 @@
                     </el-col>
                     <el-col :span="8">
                         <div class="grid-content">
-                             <label>上传名单</label>
+                             <label>上传白名单</label>
                              <el-upload
                                 class="upload-cdr"
                                 drag

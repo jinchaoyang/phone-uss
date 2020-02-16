@@ -1,9 +1,9 @@
 import request from '@/utils/request'
 
-//获取用户列表
+//获取企业列表
 export function getList(params) {
   return request({
-    url: '/user/list',
+    url: '/tenant/list',
     method: 'get',
     params: params 
   })
@@ -11,7 +11,7 @@ export function getList(params) {
 
 export function save(data){
   return request({
-    url: '/user',
+    url: '/tenant',
     method: 'post',
     data
   })
@@ -20,7 +20,7 @@ export function save(data){
 
 export function update(data){
   return request({
-    url: '/user/'+ data.id,
+    url: '/tenant/'+ data.id,
     method: 'put',
     data
   })
@@ -28,33 +28,35 @@ export function update(data){
 
 export function getById(id){
    return request({
-     url: '/user/'+id,
+     url: '/tenant/'+id,
      method: 'get'
    })
 }
 
 export function destroy(id){
   return request({
-    url: '/user/'+id,
+    url: '/tenant/'+id,
     method: 'delete'
   })
 }
 
-export function userNameCheck(params){
+export function tenantCodeCheck(params){
   return request({
-    url: '/user/userNameCheck',
+    url: '/tenant/tenantCodeCheck',
     method: 'get',
     params: params
   })
 }
 
-export function updateProfile(data){
-  return request({
-    url: '/user/profile',
-    method: 'put',
-    data
-  })
+export function stat(params){
+    return request({
+        url: '/stat/all',
+        method: 'get',
+        params: params
+    })
 }
+
+
 
 
 

@@ -10,6 +10,9 @@ import securityRoute from './modules/security'
 
 import toolRoute from './modules/tools'
 
+import tenantRoute from './modules/tenant'
+
+
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -59,7 +62,9 @@ export const constantRoutes = [
     }]
   },
   toolRoute,
+  tenantRoute,
   securityRoute,
+ 
 
   // {
   //   path: '/example',

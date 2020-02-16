@@ -48,7 +48,7 @@
                     </el-col>
                     <el-col :span="8">
                         <div class="grid-content">
-                             <label>上传名单</label>
+                             <label>上传黒名单</label>
                              <el-upload
                                 class="upload-cdr"
                                 drag
@@ -84,7 +84,7 @@
        data(){
            return {
                phone:'',
-               total: 123,
+               total: 0,
                datas:[],
                fileList: [],
                paramList:{type:0},

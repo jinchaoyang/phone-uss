@@ -22,6 +22,13 @@ const toolRoute = {
             name: '白名单列表',
             meta: { title: '白名单列表', noCache: true }
 
+        },
+        {
+            path: '/filter',
+            component: () => import('@/views/tool/filter'),
+            name: '号码过滤',
+            meta: { title: '号码过滤', noCache: true }
+  
         }
 
     ]

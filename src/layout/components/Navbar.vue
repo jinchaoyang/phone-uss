@@ -12,16 +12,16 @@
           <!-- <i class="el-icon-caret-bottom" /> -->
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
+          <a @click="dialogPasswdVisible = true">
             <el-dropdown-item>
               修改密码
             </el-dropdown-item>
-          </router-link>
-           <router-link to="/">
+          </a>
+            <a @click="dialogProfileVisible = true">
             <el-dropdown-item>
               个人设置
             </el-dropdown-item>
-          </router-link>
+          </a>
        
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">安全退出</span>
@@ -29,6 +29,37 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+
+    <el-dialog title="修改密码" :visible.sync="dialogPasswdVisible" :modal-append-to-body="false">
+  <el-form :model="userForm" :rules="rules" ref="userForm" label-width="80px">
+    <el-form-item label="密码" prop="password">
+      <el-input type="password" v-model="userForm.password" autocomplete="off"></el-input>
+    </el-form-item>
+    <el-form-item label="确认密码" prop="confirmPassword">
+      <el-input type="password" v-model="userForm.confirmPassword" autocomplete="off"></el-input>
+    </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click="dialogPasswdVisible = false">取 消</el-button>
+    <el-button type="primary" @click="modifyPasswd">确 定</el-button>
+  </div>
+</el-dialog>
+
+    <el-dialog title="个人设置" :visible.sync="dialogProfileVisible" :modal-append-to-body="false" @open="onOpen">
+  <el-form :model="profileForm" :rules="profileRules" ref="profileForm" label-width="80px">
+    <el-form-item label="姓名" prop="name">
+      <el-input  v-model="profileForm.name" autocomplete="off"></el-input>
+    </el-form-item>
+    <el-form-item label="手机号" prop="mobile">
+      <el-input  v-model="profileForm.mobile" autocomplete="off"></el-input>
+    </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click="dialogProfileVisible = false">取 消</el-button>
+    <el-button type="primary" @click="modifyProfile">确 定</el-button>
+  </div>
+</el-dialog>
+
   </div>
 </template>
 
@@ -37,7 +68,53 @@ import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 
+import { updateProfile } from '@/api/user'
+import { getInfo } from '@/api/login'
+
 export default {
+  data(){
+      /**
+         * 校验密码和确认密码是否输入一致
+         */
+        var varlidatePass = (rule,value,callback) => {
+            if(value && value!=this.userForm.password){
+                callback(new Error("两次输入密码不一致"));
+            }else{
+                callback();
+            }
+        }
+
+     return {
+       dialogPasswdVisible: false,
+       dialogProfileVisible: false,
+       userForm:{
+         password:'',
+         confirmPassword:''
+       },
+       profileForm: {
+         name:'',
+         mobile:''
+       },
+       rules: {
+            password: [
+                {required: true, message: '密码不能为空'}
+            ],
+            confirmPassword: [
+                {required: true, message: '确认密码不能为空'},
+                {validator: varlidatePass, trigger:'blur'}
+            ]   
+        },
+        profileRules: {
+            name: [
+                {required: true, message: '姓名不能为空'}
+            ],
+            mobile: [
+                {required: true, message: '手机号不能为空'}
+            ]   
+        },
+     }
+  },
+    
   components: {
     Breadcrumb,
     Hamburger
@@ -47,6 +124,7 @@ export default {
       'sidebar',
       'avatar',
       'name',
+      'token'
     ])
   },
   methods: {
@@ -56,7 +134,40 @@ export default {
     async logout() {
       await this.$store.dispatch('login/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    onOpen(){
+       getInfo(this.token).then(response => {
+         const { data } = response;
+         this.profileForm = data;
+       });
+    },
+    modifyPasswd(){
+       this.$refs["userForm"].validate((valid) => {
+        if(valid){
+          updateProfile(this.userForm).then(response => {
+            this.$message.success("密码修改成功!");
+            this.dialogPasswdVisible = false;
+          })
+        }else{
+          return false;
+        }
+      
+      });
+    },
+    modifyProfile(){
+      this.$refs["profileForm"].validate((valid) => {
+        if(valid){
+          updateProfile(this.profileForm).then(response => {
+              this.$message.success("个人设置修改成功!");
+              this.dialogProfileVisible = false;
+            })
+          }else{
+          return false;
+        }
+      
+      });
     }
+  
   }
 }
 </script>
