@@ -24,7 +24,7 @@ module.exports = [
         value: 'XX',
         label: '重庆',
         children: [
-            {value: '22',label: '重庆'}
+            {value: '23',label: '重庆'}
         ]
     },
     {
