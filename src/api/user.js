@@ -1,15 +1,15 @@
 import request from '@/utils/request'
 
-//获取用户列表
+// 获取用户列表
 export function getList(params) {
   return request({
     url: '/user/list',
     method: 'get',
-    params: params 
+    params: params
   })
 }
 
-export function save(data){
+export function save(data) {
   return request({
     url: '/user',
     method: 'post',
@@ -17,30 +17,29 @@ export function save(data){
   })
 }
 
-
-export function update(data){
+export function update(data) {
   return request({
-    url: '/user/'+ data.id,
+    url: '/user/' + data.id,
     method: 'put',
     data
   })
 }
 
-export function getById(id){
-   return request({
-     url: '/user/'+id,
-     method: 'get'
-   })
+export function getById(id) {
+  return request({
+    url: '/user/' + id,
+    method: 'get'
+  })
 }
 
-export function destroy(id){
+export function destroy(id) {
   return request({
-    url: '/user/'+id,
+    url: '/user/' + id,
     method: 'delete'
   })
 }
 
-export function userNameCheck(params){
+export function userNameCheck(params) {
   return request({
     url: '/user/userNameCheck',
     method: 'get',
@@ -48,13 +47,11 @@ export function userNameCheck(params){
   })
 }
 
-export function updateProfile(data){
+export function updateProfile(data) {
   return request({
     url: '/user/profile',
     method: 'put',
     data
   })
 }
-
-
 

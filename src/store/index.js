@@ -4,7 +4,6 @@ import getters from './getters'
 import app from './modules/app'
 import settings from './modules/settings'
 
-
 import login from './modules/login'
 
 Vue.use(Vuex)

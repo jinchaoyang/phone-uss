@@ -43,8 +43,6 @@
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
-    
-
     </el-form>
   </div>
 </template>
@@ -188,8 +186,6 @@ $light_gray:#eee;
     margin: 0 auto;
     overflow: hidden;
   }
-
- 
 
   .svg-container {
     padding: 6px 5px 6px 15px;

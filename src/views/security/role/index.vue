@@ -4,12 +4,12 @@
     <div class="query-form-box">
       <el-form :inline="true" :model="query" class="demo-form-inline">
         <el-form-item label="角色名">
-          <el-input v-model="query.name" placeholder="角色名"></el-input>
+          <el-input v-model="query.name" placeholder="角色名" />
         </el-form-item>
-    
+
         <el-form-item class="form-btns">
-          <el-button type="primary" @click="onSubmit" >查询</el-button>
-          <el-button type="success" @click="onSubmit" >新增</el-button>
+          <el-button type="primary" @click="onSubmit">查询</el-button>
+          <el-button type="success" @click="onSubmit">新增</el-button>
         </el-form-item>
       </el-form>
 
@@ -22,20 +22,18 @@
       fit
       highlight-current-row
     >
-      <el-table-column align="center" label="角色名" >
+      <el-table-column align="center" label="角色名">
         <template slot-scope="scope">
           {{ scope.$index }}
         </template>
       </el-table-column>
-        <el-table-column align="center" label="更新时间" >
+      <el-table-column align="center" label="更新时间">
         <template slot-scope="scope">
           {{ scope.$index }}
         </template>
       </el-table-column>
-    
-      
-      
-      <el-table-column align="center"  width="80"  label="操作">
+
+      <el-table-column align="center" width="80" label="操作">
         <template slot-scope="scope">
           <span>操作</span>
         </template>
