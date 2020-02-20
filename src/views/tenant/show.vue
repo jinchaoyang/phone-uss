@@ -116,13 +116,13 @@ export default {
      * 购买服务
      */
     toSetting(){
-      this.$emit('onSetting')
+      this.$emit('onLoad',{type:'setting'})
     },
     /**
      * 充值
      */
     toCharge(){
-     this.$emit('onCharge');
+     this.$emit('onLoad',{type:'charge'});
     }
 
   }

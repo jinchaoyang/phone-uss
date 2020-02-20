@@ -86,21 +86,23 @@
       direction="rtl"
       size="60%"
     >
-      <tenant-show :id="tenantId"  @onSetting="toSetting" @onCharge="toCharge"/>
+      <tenant-show :id="tenantId"  @onLoad="onLoad" />
     </el-drawer>
 
       <el-drawer
-      title="服务配置"
-      :with-header="false"
-      :visible.sync="settingView"
+      :title="drawer.title"
+      :with-header="drawer.withHeader"
+      :visible.sync="drawer.show"
       direction="rtl"
-      size="60%"
+      :size="drawer.size"
     >
-      <tenant-setting :id="tenantId" />
+      <tenant-setting :id="tenantId" v-if="drawer.view=='setting'"/>
+      <tenant-charge  :id="tenantId" v-if="drawer.view=='charge'"/>
+
     </el-drawer>
 
 
-      <el-drawer
+ <!--     <el-drawer
       title="账户充值"
       :with-header="false"
       :visible.sync="chargeView"
@@ -109,7 +111,7 @@
     >
       <tenant-charge :id="tenantId" />
     </el-drawer>
-
+ -->
   </div>
 </template>
 
@@ -161,8 +163,10 @@ export default {
       },
       drawer:{
         show: false,
+        view: '',
         title: '',
-        withHeader: true
+        withHeader: true,
+        size: '50%'
       },
       addView: false,
       showView: false,
@@ -240,11 +244,18 @@ export default {
         })
       })
     },
-    toSetting(){
-       this.settingView = true;
-    },
-    toCharge(){
-      this.chargeView = true;
+    onLoad(data){
+     let view = data.type;
+     let drawer = {show:true,withHeader:true,size:'50%'};
+     drawer.view = view;
+     if(view=='charge'){
+       drawer.title='账户充值';
+       drawer.size='40%';
+     }else if(view=='setting'){
+       drawer.title='服务设置';
+       drawer.withHeader = false;
+     }
+     this.drawer = drawer
     }
 
   }
