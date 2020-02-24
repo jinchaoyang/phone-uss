@@ -39,9 +39,14 @@
           <span>{{ scope.row.tenantCode }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="服务IP" width="180" align="center">
+      <el-table-column label="服务IP" width="140" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.ip }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="服务类型" width="140" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.tenantType  | tenantTypeFilter }}</span>
         </template>
       </el-table-column>
       <el-table-column label="联系人" width="140" align="center">
@@ -51,7 +56,7 @@
       </el-table-column>
       <el-table-column label="联系方式" width="140" align="center">
         <template slot-scope="scope">
-          {{ scope.row.contactPhone }}
+          {{ scope.row.contactPhone}}
         </template>
       </el-table-column>
       <el-table-column class-name="status-col" label="状态" width="100" align="center">
@@ -97,7 +102,9 @@
       :size="drawer.size"
     >
       <tenant-setting :id="tenantId" v-if="drawer.view=='setting'"/>
-      <tenant-charge  :id="tenantId" v-if="drawer.view=='charge'"/>
+      <tenant-charge  :id="tenantId" @onSuccess="onSuccess" v-if="drawer.view=='charge'"/>
+      <tenant-reserve  :id="tenantId" @onSuccess="onSuccess" v-if="drawer.view=='reserve'"/>
+      
 
     </el-drawer>
 
@@ -122,6 +129,7 @@ import tenantAdd from './add'
 import tenantShow from './show'
 import tenantSetting from './setting'
 import tenantCharge from './charge'
+import tenantReserve from './reserve'
 
 export default {
   components: {
@@ -129,7 +137,8 @@ export default {
     'tenant-add': tenantAdd,
     'tenant-show': tenantShow,
     'tenant-setting': tenantSetting,
-    'tenant-charge': tenantCharge
+    'tenant-charge': tenantCharge,
+    'tenant-reserve': tenantReserve
   },
   filters: {
     statusFilter(status) {
@@ -147,8 +156,15 @@ export default {
         3: 'danger'
       }
       return statusMap[status]
-    }
-  },
+    },
+    tenantTypeFilter(tenantType){
+      const statusMap = {
+        1: '外网',
+        2: '内网'
+      }
+      return statusMap[tenantType]
+    }  
+},
   data() {
     return {
       list: null,
@@ -254,8 +270,14 @@ export default {
      }else if(view=='setting'){
        drawer.title='服务设置';
        drawer.withHeader = false;
+     }else if(view == 'reserve'){
+       drawer.title='账户冲账';
+       drawer.size='40%';
      }
      this.drawer = drawer
+    },
+    onSuccess(){
+      this.drawer.show = false;
     }
 
   }

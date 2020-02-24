@@ -6,6 +6,15 @@
     <el-form-item label="企业编号" prop="tenantCode">
       <el-input v-model="tenantForm.tenantCode" type="text" autocomplete="off" maxlength="36" />
     </el-form-item>
+     <el-form-item label="服务IP" prop="ip">
+      <el-input v-model="tenantForm.ip" maxlength="16" />
+    </el-form-item>
+    <el-form-item label="服务类型" prop="tenantType">
+      <el-select v-model="tenantForm.tenantType" placeholder="请选择">
+        <el-option label="外网" value="1"></el-option>
+        <el-option label="内网" value="2"></el-option>
+      </el-select>
+    </el-form-item>
     <el-form-item label="联系人" prop="contactName">
       <el-input v-model="tenantForm.contactName" autocomplete="off" maxlength="36" />
     </el-form-item>
@@ -18,9 +27,7 @@
     <el-form-item label="联系邮箱" prop="email">
       <el-input v-model="tenantForm.email" maxlength="36" />
     </el-form-item>
-    <el-form-item label="服务IP" prop="ip">
-      <el-input v-model="tenantForm.ip" maxlength="16" />
-    </el-form-item>
+   
     <el-form-item label="备注" prop="remark">
       <el-input v-model="tenantForm.remark" maxlength="64" />
     </el-form-item>
@@ -65,7 +72,8 @@ export default {
         address: '',
         remark: '',
         status: '',
-        ip: ''
+        ip: '',
+        tenantType:''
       },
       rules: {
         name: [
@@ -74,6 +82,9 @@ export default {
         tenantCode: [
           { required: true, message: '企业编码不能为空' },
           { validator: validateTenantCode, trigger: 'blur' }
+        ],
+        tenantType: [
+          { required: true, message: '服务类型不能为空' }
         ],
         contactName: [
           { required: true, message: '联系人不能为空' }
@@ -135,3 +146,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .drawer-form .el-select{
+    width: 100%;
+  }
+</style>
+

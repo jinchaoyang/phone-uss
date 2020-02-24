@@ -11,6 +11,12 @@
         <el-form-item label="企业编号">
           <span>{{ tenant.tenantCode }}</span>
         </el-form-item>
+         <el-form-item label="服务IP" prop="ip">
+          <span>{{ tenant.ip }}</span>
+        </el-form-item>
+        <el-form-item label="服务类型" prop="ip">
+          <span>{{ tenant.tenantType | tenantTypeFilter }}</span>
+        </el-form-item>
         <el-form-item label="联系人" prop="contactName">
           <span>{{ tenant.contactName }}</span>
         </el-form-item>
@@ -23,9 +29,7 @@
         <el-form-item label="联系邮箱" prop="email">
           <span>{{ tenant.email }}</span>
         </el-form-item>
-        <el-form-item label="服务IP" prop="ip">
-          <span>{{ tenant.ip }}</span>
-        </el-form-item>
+       
         <el-form-item label="备注" prop="remark">
           <span>{{ tenant.remark }}</span>
         </el-form-item>
@@ -45,7 +49,8 @@
       <div class="drawer-right">
           <el-button type="warning" size="small" @click="toSetting">服务配置</el-button>
           <el-button type="info" size="small">禁用账号</el-button>
-          <el-button type="success" size="small" @click="toCharge">账户充值</el-button>
+          <el-button type="success" size="small" @click="toCharge" :id="id">账户充值</el-button>
+          <el-button type="primary" size="small" @click="toReserve" :id="id">账户冲账</el-button>
       </div>
       </div>
     </el-tab-pane>
@@ -87,7 +92,14 @@ export default {
         3: 'danger'
       }
       return statusMap[status]
-    }
+    },
+      tenantTypeFilter(tenantType){
+      const statusMap = {
+        1: '外网',
+        2: '内网'
+      }
+      return statusMap[tenantType]
+    }  
   },
   props: ['id'],
   data() {
@@ -123,6 +135,9 @@ export default {
      */
     toCharge(){
      this.$emit('onLoad',{type:'charge'});
+    },
+    toReserve(){
+      this.$emit('onLoad',{type:'reserve'});
     }
 
   }
