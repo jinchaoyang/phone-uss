@@ -46,8 +46,17 @@
 
       </el-form>
       </div>
+      <div class="drawer-center">
+          <div class="account-item">
+            <label>账户余额：</label> <span>{{tenant.balance | numberFormat}}</span>
+          </div>
+           <div class="account-item">
+            <label>透支额度：</label> <span>{{tenant.overdraft | numberFormat}}</span>
+          </div>
+
+      </div>
       <div class="drawer-right">
-          <el-button type="warning" size="small" @click="toSetting">服务配置</el-button>
+          <el-button type="warning" size="small" @click="toSetting">服务订购</el-button>
           <el-button type="info" size="small">禁用账号</el-button>
           <el-button type="success" size="small" @click="toCharge" :id="id">账户充值</el-button>
           <el-button type="primary" size="small" @click="toReserve" :id="id">账户冲账</el-button>
@@ -56,6 +65,14 @@
     </el-tab-pane>
     <!-- <el-tab-pane label="白名单服务" name="second">配置管理</el-tab-pane>
     <el-tab-pane label="黑名单服务" name="third">角色管理</el-tab-pane> -->
+
+     <el-tab-pane label="交易记录" name="tradeLog">
+      <trade-log :id="id"></trade-log>
+    </el-tab-pane>
+    <el-tab-pane label="订购记录" name="buyLog">
+      <purchase-log :id="id"></purchase-log>
+    </el-tab-pane>
+
     <el-tab-pane label="数据统计" name="cdrStat">
       <tenant-stat ref="stat-node" />
     </el-tab-pane>
@@ -66,12 +83,16 @@
 <script>
 import { getById } from '@/api/tenant'
 import tenantStat from './stat'
+import tradeLog from './tradeLog'
+import purchaseLog from './purchaseLog'
 
 import moment from 'moment'
 
 export default {
   components: {
-    'tenant-stat': tenantStat
+    'tenant-stat': tenantStat,
+    'trade-log': tradeLog,
+    'purchase-log': purchaseLog
   },
   filters: {
     formatDate(value) {
@@ -99,6 +120,11 @@ export default {
         2: '内网'
       }
       return statusMap[tenantType]
+    },
+    numberFormat(val) {
+      val = val + ''
+      var pattern = /(?=((?!\b)\d{3})+$)/g
+      return val.replace(pattern, ',')
     }  
   },
   props: ['id'],
@@ -152,7 +178,28 @@ export default {
       align-items: flex-start;
     }
     .drawer-left{
-      width:70%;
+      width:55%;
+    }
+    .drawer-center{
+      padding: 15px 20px;
+      border: 1px dashed #ddd;
+      font-size: 14px;
+      font-weight: 400;
+      background-color: #f5f5f5;
+      width:20%;
+    }
+    .drawer-center .account-item{
+      margin: 15px 0;
+    }
+
+    .drawer-center label, .drawer-center span{
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+   .drawer-center span{
+       color: red;
+       font-weight: bold;
     }
     .drawer-right{
       display: flex;

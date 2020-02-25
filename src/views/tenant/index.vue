@@ -99,6 +99,7 @@
       :with-header="drawer.withHeader"
       :visible.sync="drawer.show"
       direction="rtl"
+      destroy-on-close
       :size="drawer.size"
     >
       <tenant-setting :id="tenantId" v-if="drawer.view=='setting'"/>

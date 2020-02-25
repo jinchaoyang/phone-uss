@@ -28,9 +28,17 @@ export function update(data){
 
 export function findByCode(params){
     return request({
-        url: '/tenant/product/'+params.code,
+        url: '/tenant/product/'+params.tenantId,
         method: 'get',
         params: params
+    })
+}
+
+export function renew(data){
+    return request({
+        url: '/tenant/product/renew',
+        method: 'post',
+        data
     })
 }
 
