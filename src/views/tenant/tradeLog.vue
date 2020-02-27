@@ -45,7 +45,7 @@
       </el-table-column>
       <el-table-column label="备注" align="center">
         <template slot-scope="scope">
-          {{scope.row.remark}}
+          {{scope.row.note}}
         </template>
       </el-table-column>
     </el-table>

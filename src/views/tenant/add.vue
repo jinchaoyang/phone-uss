@@ -10,7 +10,7 @@
       <el-input v-model="tenantForm.ip" maxlength="16" />
     </el-form-item>
     <el-form-item label="服务类型" prop="tenantType">
-      <el-select v-model="tenantForm.tenantType" placeholder="请选择">
+      <el-select v-model="tenantForm.tenantType" placeholder="请选择" @change="changeType">
         <el-option label="外网" value="1"></el-option>
         <el-option label="内网" value="2"></el-option>
       </el-select>
@@ -111,7 +111,9 @@ export default {
     }
   },
   methods: {
-
+    changeType(value){
+      this.demo='';
+    },
     submitForm() {
       this.$refs['tenantForm'].validate((valid) => {
         if (valid) {

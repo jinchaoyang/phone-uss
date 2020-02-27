@@ -68,7 +68,6 @@ export default {
       this.$refs['chargeForm'].validate((valid) => {
         if (valid) {
            let amount = this.chargeForm.amount;
-           this.chargeForm.amount = amount*100;
            this.saveForm();
         } else {
           return false;

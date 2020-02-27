@@ -88,6 +88,7 @@
       title="企业详情"
       :with-header="false"
       :visible.sync="showView"
+      destroy-on-close
       direction="rtl"
       size="60%"
     >
