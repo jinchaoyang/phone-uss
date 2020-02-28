@@ -1,12 +1,12 @@
 <template>
   <el-tabs v-model="activeName" @tab-click="handleClick">
     <el-tab-pane label="黑名单服务" name="black">
-      <tenant-product :code="1001" :id="id"> </tenant-product>
+      <tenant-product @onSuccess="onSuccess" :code="1001" :id="id"> </tenant-product>
 
     </el-tab-pane>
 
     <el-tab-pane label="白名单服务" name="vip">
-      <tenant-product :code="1002" :id="id"> </tenant-product>
+      <tenant-product @onSuccess="onSuccess" :code="1002" :id="id"> </tenant-product>
     </el-tab-pane>
 
 
@@ -32,6 +32,9 @@
       handleClick(tab, event) {
         this.activeName = tab.name
       },
+      onSuccess(){
+        this.$emit("onSuccess")
+      }
      
     }
   }

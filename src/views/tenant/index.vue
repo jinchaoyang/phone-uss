@@ -92,7 +92,7 @@
       direction="rtl"
       size="60%"
     >
-      <tenant-show :id="tenantId"  @onLoad="onLoad" />
+      <tenant-show :id="tenantId" ref="show"  @onLoad="onLoad" />
     </el-drawer>
 
       <el-drawer
@@ -103,7 +103,7 @@
       destroy-on-close
       :size="drawer.size"
     >
-      <tenant-setting :id="tenantId" v-if="drawer.view=='setting'"/>
+      <tenant-setting :id="tenantId" @onSuccess="onSuccess" v-if="drawer.view=='setting'"/>
       <tenant-charge  :id="tenantId" @onSuccess="onSuccess" v-if="drawer.view=='charge'"/>
       <tenant-reserve  :id="tenantId" @onSuccess="onSuccess" v-if="drawer.view=='reserve'"/>
       
@@ -181,6 +181,7 @@ export default {
       },
       drawer:{
         show: false,
+        destroy:true,
         view: '',
         title: '',
         withHeader: true,
@@ -270,7 +271,7 @@ export default {
        drawer.title='账户充值';
        drawer.size='40%';
      }else if(view=='setting'){
-       drawer.title='服务设置';
+       drawer.title='服务订购';
        drawer.withHeader = false;
      }else if(view == 'reserve'){
        drawer.title='账户冲账';
@@ -280,6 +281,7 @@ export default {
     },
     onSuccess(){
       this.drawer.show = false;
+      this.$refs["show"].fetchData();
     }
 
   }

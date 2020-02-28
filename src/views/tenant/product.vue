@@ -1,6 +1,6 @@
 <template>
 <el-form ref="buyForm" :model="buyForm" status-icon  label-width="100px" class="drawer-form">
-    <block v-if="newProduct">
+    <div v-if="newProduct">
         <el-form-item label="是否开通" prop="status">
        <el-switch
            v-model="buyForm.status"
@@ -33,15 +33,9 @@
             </el-date-picker>
             </el-form-item>
 
-        <!-- <el-form-item label="充值金额" prop="amount">
-          <el-input v-model="chargeForm.amount" maxlength="12" autocomplete="off" />
-        </el-form-item>
-
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="chargeForm.remark" maxlength="64" />
-        </el-form-item> -->
-     </block>
-     <block v-else>
+  
+    </div>
+     <div v-else>
        <el-form-item label="到期时间">
           <el-input v-model="buyForm.expireAt" autocomplete="off" disabled="" />
         </el-form-item>
@@ -59,14 +53,14 @@
             <el-option v-for="item in durations" :label="item.label" :value="item.value"></el-option>
           </el-select>
         </el-form-item>
-     </block>
+     </div>
         
 
         <el-form-item>
           <el-button type="primary" :disabled="buyForm.status==0" @click="submitForm">立即购买</el-button>
-           <block class="fee-info">
+           <span  class="fee-info">
            <span class="total-fee-title">合计：</span><span class="total-fee">￥ {{totalFee | numberFormat}}</span>
-           </block>
+           </span>
         </el-form-item>
       </el-form>
 
@@ -130,6 +124,7 @@
         save(data).then(response => {
           that.$message.success('服务购买成功');
           that.newProduct = false;
+          that.$emit("onSuccess")
         })
       },
       renewProduct(){
@@ -139,6 +134,7 @@
         data.productType = that.code;
         renew(data).then(response => {
           that.$message.success('服务续费成功');
+          that.$emit("onSuccess")
         })
       },
       getDetail(){

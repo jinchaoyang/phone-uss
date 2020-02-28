@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar">
+  <div :class="sidebar.opened ? 'navbar':'navbar navbar-small'">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <breadcrumb class="breadcrumb-container" />
@@ -179,6 +179,10 @@ export default {
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
   width: calc(100% - 220px);
   z-index:999;
+
+  &.navbar-small{
+    width: calc(100% - 70px);
+  }
 
   .hamburger-container {
     line-height: 46px;
