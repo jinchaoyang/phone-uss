@@ -80,6 +80,7 @@
       destroy-on-close
       direction="rtl"
       size="50%"
+      ref="editBox"
     >
       <tenant-add :id="tenantId" :mode="drawer.mode" @createSuccess="createSuccess" />
     </el-drawer>
@@ -226,6 +227,7 @@ export default {
     createSuccess() {
       const that = this
       that.addView = false
+      that.$refs['editBox'].closeDrawer();
       that.fetchData()
     },
     add() {
