@@ -102,6 +102,7 @@
       direction="rtl"
       destroy-on-close
       :size="drawer.size"
+      ref="drawerBox"
     >
       <tenant-setting :id="tenantId" @onSuccess="onSuccess" v-if="drawer.view=='setting'"/>
       <tenant-charge  :id="tenantId" @onSuccess="onSuccess" v-if="drawer.view=='charge'"/>
@@ -281,6 +282,7 @@ export default {
     },
     onSuccess(){
       this.drawer.show = false;
+      this.$refs["drawerBox"].closeDrawer();
       this.$refs["show"].fetchData();
     }
 
