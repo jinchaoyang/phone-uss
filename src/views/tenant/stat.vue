@@ -56,7 +56,7 @@ export default {
       this.loaded = true
       stat({ ip: ip }).then(response => {
         const { data } = response
-        this.datas = data.reserve().slice(0, 15)
+        this.datas = data.reverse().slice(0, 15)
         this.listLoading = false
       })
     }
