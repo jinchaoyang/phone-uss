@@ -88,7 +88,7 @@ export default {
       return statusMap[type]
       },
       numberFormat(val) {
-        val = val/100;    
+        val = val/1000;    
         val = val + ''
         var pattern = /(?=((?!\b)\d{3})+$)/g
         return val.replace(pattern, ',')
@@ -99,7 +99,6 @@ export default {
   },
   methods: {
     fetchData() {
-        console.log('xxxxxx');
       this.listLoading = true
       this.query.tenantId = this.id
       getList(this.query).then(response => {

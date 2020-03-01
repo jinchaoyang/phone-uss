@@ -111,12 +111,12 @@
       submitForm(){
         var that = this;
         if(that.newProduct){
-          that.buyProuct();
+          that.buyProduct();
         }else{
           this.renewProduct();
         }
       },
-      buyProuct(){
+      buyProduct(){
         var that = this;
         let data = that.buyForm;
         data.tenantId = that.id;
@@ -142,12 +142,14 @@
         findByCode(params).then(response => {
           const { data } = response
           if(data){
-            data.fee = data.fee/100;
+            data.fee = data.fee/1000;
             data.duration=1;
             this.buyForm = Object.assign(this.buyForm,data);
             this.newProduct = false;
+            this.buyForm.status=1;
           }else{
             this.newProduct = true;
+          
           }
           
         })

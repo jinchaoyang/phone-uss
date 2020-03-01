@@ -51,10 +51,10 @@ export default {
   },
 
   methods: {
-    fetchData(ip) {
+    fetchData(ip,tenantType) {
       this.listLoading = true
       this.loaded = true
-      stat({ ip: ip }).then(response => {
+      stat({ ip: ip , tenantType: tenantType}).then(response => {
         const { data } = response
         this.datas = data.reverse().slice(0, 15)
         this.listLoading = false

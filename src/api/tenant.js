@@ -49,6 +49,7 @@ export function tenantCodeCheck(params) {
 
 export function stat(params) {
   return request({
+    baseURL: params.tenantType==1?process.env.VUE_APP_BASE_API:process.env.VUE_APP_EXTERNAL_API,
     url: '/stat/all',
     method: 'get',
     params: params

@@ -15,6 +15,10 @@
         <el-option label="内网" value="2"></el-option>
       </el-select>
     </el-form-item>
+      <el-form-item label="透支额度" prop="overdraft">
+      <el-input v-model.number="tenantForm.overdraft" autocomplete="off" maxlength="4" max=9999 />
+    </el-form-item>
+ 
     <el-form-item label="联系人" prop="contactName">
       <el-input v-model="tenantForm.contactName" autocomplete="off" maxlength="36" />
     </el-form-item>
@@ -73,7 +77,8 @@ export default {
         remark: '',
         status: '',
         ip: '',
-        tenantType:''
+        tenantType:'',
+        overdraft:'0'
       },
       rules: {
         name: [
@@ -142,6 +147,7 @@ export default {
     getDetail() {
       getById(this.id).then(response => {
         const { data } = response
+        data.overdraft = data.overdraft/1000
         this.tenantForm = data
       })
     }

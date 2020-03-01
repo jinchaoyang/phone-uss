@@ -143,10 +143,10 @@ export default {
     fetchData() {
       getById(this.id).then(response => {
         const { data } = response
-        data.balance = data.balance / 100;
-        data.overdraft = data.overdraft /100;
+        data.balance = data.balance / 1000;
+        data.overdraft = data.overdraft /1000;
         this.tenant = data
-        this.$refs['stat-node'].fetchData(data.ip)
+        this.$refs['stat-node'].fetchData(data.ip,data.tenantType);
       })
     },
     handleClick(tab, event) {
@@ -188,7 +188,7 @@ export default {
       font-size: 14px;
       font-weight: 400;
       background-color: #f5f5f5;
-      width:20%;
+      width:24%;
     }
     .drawer-center .account-item{
       margin: 15px 0;
