@@ -16,7 +16,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="单价(元)" prop="price">
-          <el-input v-model="buyForm.fee" maxlength="12" autocomplete="off" />
+          <el-input v-model="buyForm.feeDesc" maxlength="12" autocomplete="off" />
         </el-form-item>
         <el-form-item label="购买时长" prop="duration">
           <el-select v-model="buyForm.duration" placeholder="请选择">
@@ -46,7 +46,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="单价(元)" prop="price">
-          <el-input v-model="buyForm.fee" maxlength="12" autocomplete="off" />
+          <el-input v-model="buyForm.feeDesc" maxlength="12" autocomplete="off" />
         </el-form-item>
         <el-form-item label="续费时长" prop="duration">
           <el-select v-model="buyForm.duration" placeholder="请选择">
@@ -80,9 +80,10 @@
         buyForm:{
            feeType:'',
            duration:1,
-           fee:'',
+           feeDesc:'',
            effectAt:'',
-           status: '0'
+           status: '0',
+           fee: 0
         },
         durations:[
           {label:'1个月',value:1},
@@ -142,7 +143,7 @@
         findByCode(params).then(response => {
           const { data } = response
           if(data){
-            data.fee = data.fee/1000;
+            data.feeDesc = data.fee/1000;
             data.duration=1;
             this.buyForm = Object.assign(this.buyForm,data);
             this.newProduct = false;
