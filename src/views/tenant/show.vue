@@ -143,8 +143,8 @@ export default {
     fetchData() {
       getById(this.id).then(response => {
         const { data } = response
-        data.balance = data.balance / 1000;
-        data.overdraft = data.overdraft /1000;
+        data.balance = data.balance / 10000;
+        data.overdraft = data.overdraft /10000;
         this.tenant = data
         this.$refs['stat-node'].fetchData(data.ip,data.tenantType);
       })

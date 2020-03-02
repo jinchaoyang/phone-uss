@@ -88,7 +88,7 @@ export default {
       return statusMap[type]
       },
       numberFormat(val) {
-        val = val/1000;    
+        val = val/10000;    
         val = val + ''
         var pattern = /(?=((?!\b)\d{3})+$)/g
         return val.replace(pattern, ',')

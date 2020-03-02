@@ -148,7 +148,7 @@
         findByCode(params).then(response => {
           const { data } = response
           if(data){
-            data.feeDesc = data.fee/1000;
+            data.feeDesc = data.fee/10000;
             data.duration=1;
             this.buyForm = Object.assign(this.buyForm,data);
             this.newProduct = false;
