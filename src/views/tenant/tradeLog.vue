@@ -90,8 +90,15 @@ export default {
       numberFormat(val) {
         val = val/10000;    
         val = val + ''
-        var pattern = /(?=((?!\b)\d{3})+$)/g
-        return val.replace(pattern, ',')
+        let sub = '';
+        if(val.indexOf('.')>0){
+            let arr = val.split('.');
+            val = arr[0];
+            sub = arr[1];
+        }
+       var pattern = /(?=((?!\b)\d{3})+$)/g
+       return val.replace(pattern, ',')+sub
+     
     }  
   },
   created() {
