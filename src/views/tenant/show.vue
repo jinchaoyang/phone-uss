@@ -128,6 +128,7 @@ export default {
           let arr = val.split('.');
           val = arr[0];
           sub = arr[1];
+          sub = sub?('.'+sub):''
       }
       var pattern = /(?=((?!\b)\d{3})+$)/g
       return val.replace(pattern, ',')+sub
