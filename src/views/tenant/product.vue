@@ -104,7 +104,12 @@
     },
     computed:{
       totalFee() {
-        return this.buyForm.fee * this.buyForm.duration || 0;
+        if(this.buyForm.feeType==2){
+          return 0;
+        }else{
+          return this.buyForm.feeDesc * this.buyForm.duration || 0;
+        }
+  
       }
     },
     methods:{
