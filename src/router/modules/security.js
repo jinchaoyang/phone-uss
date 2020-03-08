@@ -32,7 +32,7 @@ const userRouter = {
     },
     {
       path: '/resources',
-      component: () => import('@/views/security/resources/index'),
+      component: () => import('@/views/security/resource/index'),
       name: '资源列表',
       meta: {title: '资源列表', noCache: true}
       
