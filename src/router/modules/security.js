@@ -29,6 +29,13 @@ const userRouter = {
       component: () => import('@/views/security/role/index'),
       name: '角色列表',
       meta: { title: '角色列表', noCache: true }
+    },
+    {
+      path: '/resources',
+      component: () => import('@/views/security/resources/index'),
+      name: '资源列表',
+      meta: {title: '资源列表', noCache: true}
+      
     }
 
   ]
