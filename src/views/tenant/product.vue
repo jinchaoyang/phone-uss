@@ -32,7 +32,9 @@
               placeholder="选择生效日期">
             </el-date-picker>
             </el-form-item>
-
+         <el-form-item label="低消(元)" prop="dissipationDesc" v-if="buyForm.feeType==2">
+          <el-input v-model="buyForm.dissipationDesc" maxlength="12" autocomplete="off" />
+        </el-form-item>
   
     </div>
      <div v-else>
@@ -45,13 +47,16 @@
             <el-option label="按使用量" value="2"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="单价(元)" prop="price">
+        <el-form-item label="单价(元)" prop="feeDesc">
           <el-input v-model="buyForm.feeDesc" maxlength="12" autocomplete="off" />
         </el-form-item>
         <el-form-item label="续费时长" prop="duration">
           <el-select v-model="buyForm.duration" placeholder="请选择">
             <el-option v-for="item in durations" :label="item.label" :value="item.value"></el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item label="低消(元)" prop="dissipationDesc"  v-if="buyForm.feeType==2">
+          <el-input v-model="buyForm.dissipationDesc" maxlength="12" autocomplete="off" />
         </el-form-item>
      </div>
         
@@ -83,7 +88,8 @@
            feeDesc:'',
            effectAt:'',
            status: '0',
-           fee: 0
+           fee: 0,
+           dissipationDesc:''
         },
         durations:[
           {label:'1个月',value:1},
@@ -149,6 +155,7 @@
           const { data } = response
           if(data){
             data.feeDesc = data.fee/10000;
+            data.dissipationDesc = data.dissipation/10000;
             data.duration=1;
             this.buyForm = Object.assign(this.buyForm,data);
             this.newProduct = false;
