@@ -10,7 +10,7 @@
         </el-radio-group>
     </el-form-item>
     <el-form-item label="编码" prop="code">
-      <el-input v-model="resForm.code" type="text" autocomplete="off" maxlength="16" />
+      <el-input v-model="resForm.code" type="text" autocomplete="off" maxlength="32" />
     </el-form-item>
     <el-form-item label="URL" prop="url">
       <el-input v-model="resForm.url" type="text" autocomplete="off" maxlength="64" />
@@ -18,85 +18,59 @@
     <el-form-item label="图标" prop="icon">
       <el-input v-model.number="resForm.icon" maxlength="16" />
     </el-form-item>
-      <el-form-item label="是否显示" prop="display">
-        <el-radio-group v-model="resForm.display" fill="#67C23A">
+      <el-form-item label="是否显示" prop="visible">
+        <el-radio-group v-model="resForm.visible" fill="#67C23A">
             <el-radio-button  label="1">显示</el-radio-button>
             <el-radio-button  label="0">不显示</el-radio-button>
         </el-radio-group>
      </el-form-item>
+     <el-form-item label="排序" prop="seq">
+       <el-input v-model.number="resForm.seq" maxlength="4" />
+     </el-form-item>
       <el-form-item label="父节点" prop="parentName">
-      <el-input v-model="parentName" maxlength="16" />
+        <el-select v-model="resForm.parentId" class="full-select" filterable clearable placeholder="请选择父节点">
+            <el-option
+              v-for="item in options"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm">保存</el-button>
     </el-form-item>
-   
+
   </el-form>
 </template>
 
 <script>
 
-import { save, update, getById, userNameCheck } from '@/api/user'
+import { save, update, getById, getList } from '@/api/security/resource'
 export default {
   props: ['id', 'mode'],
   data() {
-    /**
-         * 校验密码和确认密码是否输入一致
-         */
-    var varlidatePass = (rule, value, callback) => {
-      if (value && value != this.userForm.password) {
-        callback(new Error('两次输入密码不一致'))
-      } else {
-        callback()
-      }
-    }
-    /**
-         * 校验用户名是否已经存在
-         */
-    var validateUserName = (rule, value, callback) => {
-      if (value) {
-        var params = { userName: value, id: this.userForm.id }
-        userNameCheck(params).then(response => {
-          const { data } = response
-          if (!data) {
-            callback(new Error('用户名已存在'))
-          } else {
-            callback()
-          }
-        })
-      } else {
-        callback()
-      }
-    }
     return {
       resForm:{
           type:'MENU',
-          display: '1',
-          name:'1234'
+          visible: '1',
+          name:'',
+          seq:1
       },
       rules: {
         name: [
-          { required: true, message: '姓名不能为空' }
+          { required: true, message: '资源名不能为空' }
         ],
-        userName: [
-          { required: true, message: '用户名不能为空' },
-          { validator: validateUserName, trigger: 'blur' }
-        ],
-        password: [
-          { required: true, message: '密码不能为空' }
-        ],
-        confirmPassword: [
-          { required: true, message: '确认密码不能为空' },
-          { validator: varlidatePass, trigger: 'blur' }
-        ],
-        mobile: [
-          { required: true, message: '手机号不能为空' }
+        code: [
+          { required: true, message: '资源编码不能为空' },
         ]
-
-      }
+      },
+      parentName:'',
+      options:[]
     }
   },
   created() {
+    this.getParents();
     if (this.mode == 'update') {
       this.getDetail()
     }
@@ -104,7 +78,7 @@ export default {
   methods: {
 
     submitForm() {
-      this.$refs['userForm'].validate((valid) => {
+      this.$refs['resForm'].validate((valid) => {
         if (valid) {
           if (this.mode == 'update' && this.id) {
             this.updateForm()
@@ -117,13 +91,13 @@ export default {
       })
     },
     saveForm() {
-      save(this.userForm).then(response => {
+      save(this.resForm).then(response => {
         this.$message.success('保存成功!')
         this.$emit('createSuccess')
       })
     },
     updateForm() {
-      update(this.userForm).then(response => {
+      update(this.resForm).then(response => {
         this.$message.success('更新成功!')
         this.$emit('createSuccess')
       })
@@ -131,10 +105,20 @@ export default {
     getDetail() {
       getById(this.id).then(response => {
         const { data } = response
-        data.confirmPassword = data.password
-        this.userForm = data
+        this.resForm = data
       })
+    },
+    getParents(){
+        getList({parentNode:1}).then(response => {
+          const { data } = response
+          this.options = data
+        })
     }
   }
 }
 </script>
+<style lang="scss">
+  .full-select{
+    width:100%;
+  }
+</style>
