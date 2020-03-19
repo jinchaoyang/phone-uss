@@ -105,6 +105,7 @@ export default {
     getDetail() {
       getById(this.id).then(response => {
         const { data } = response
+        data.visible = data.visible+''
         this.resForm = data
       })
     },

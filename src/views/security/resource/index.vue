@@ -12,8 +12,8 @@
          <div class="btns-list">
              <el-row>
                 <el-button type="primary" size="small" @click="add">新增</el-button>
-                <el-button type="warning" size="small">编辑</el-button>
-                <el-button type="danger" size="small">删除</el-button>
+                <el-button type="warning" size="small" @click="edit">编辑</el-button>
+                <el-button type="danger" size="small" @click="destroy">删除</el-button>
             </el-row>
          </div>
 
@@ -54,7 +54,7 @@
       size="50%"
       ref="drawerBox"
     >
-      <resource-add @createSuccess="onSuccess" :id="resourceId" />
+      <resource-add @createSuccess="onSuccess" :mode="drawer.mode" :id="node.id" />
     </el-drawer>
 
   </div>
@@ -62,7 +62,7 @@
 
 <script>
 import addView from './add'
-import { getTree,getById } from '@/api/security/resource'
+import { getTree,getById, destroy } from '@/api/security/resource'
 
 
 export default{
@@ -104,8 +104,17 @@ export default{
             }
             this.drawer = drawer
         },
+        edit(){
+          let drawer = {
+            title: '编辑资源',
+            show: true,
+            mode: 'update'
+          }
+          this.drawer = drawer
+        },
         onSuccess(){
           this.$refs["drawerBox"].closeDrawer();
+          this.getResourceTree()
         },
         getResourceTree(){
           getTree().then(response => {
@@ -122,6 +131,21 @@ export default{
         handleNodeClick(data){
           data.visibleDesc = data.visible==1?'显示':'不显示'
           this.node = data
+        },
+        destroy(){
+          this.$confirm('是否确认删除此记录?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                  }).then(() => {
+                      this.delete();
+                  })
+        },
+        delete(){
+          destroy(this.node.id).then(response => {
+            const { data } = response
+            this.getResourceTree();
+          })
         }
     },
 

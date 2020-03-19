@@ -8,8 +8,8 @@
         </el-form-item>
 
         <el-form-item class="form-btns">
-          <el-button type="primary" @click="onSubmit">查询</el-button>
-          <el-button type="success" @click="onSubmit">新增</el-button>
+          <el-button type="primary" @click="search">查询</el-button>
+          <el-button type="success" @click="add">新增</el-button>
         </el-form-item>
       </el-form>
 
@@ -39,30 +39,50 @@
         </template>
       </el-table-column>
     </el-table>
+   <pb-pagination :page-no="query.pageNo" :page-size="query.pageSize" :total="total" @pageChange="pageChange" />
+
+
+    <el-drawer
+      :title="drawer.title"
+      :visible.sync="drawer.show"
+      destroy-on-close
+      direction="rtl"
+      size="50%"
+      ref="drawerBox"
+    >
+      <role-add @createSuccess="onSuccess" :mode="drawer.mode" :id="id" ></role-add>
+    </el-drawer>
+
   </div>
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { getList } from '@/api/security/role'
+import addView from './add'
+import Pagination from '@/components/Pagination'
+
 
 export default {
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
+  components:{
+     "role-add":addView,
+     'pb-pagination': Pagination
   },
   data() {
     return {
       list: null,
       listLoading: true,
+      drawer:{
+          title:'',
+          show: false,
+          mode: ''
+      },
       query: {
-
-      }
+        pageNo:1,
+        pageSize:15,
+        name:null
+      },
+      total:0,
+      id:''
     }
   },
   created() {
@@ -75,6 +95,30 @@ export default {
         this.list = response.data.items
         this.listLoading = false
       })
+    },
+    onSuccess(){
+      this.$refs["drawerBox"].closeDrawer();
+      this.fetchData();
+    },
+    pageChange(data) {
+      if (data.pageNo) {
+        this.query.pageNo = data.pageNo
+      } else if (data.pageSize) {
+        this.query.pageSize = data.pageSize
+      }
+      this.fetchData()
+    },
+    search(){
+      this.query.pageNo = 1
+      this.fetchData()
+    },
+    add(){
+      let drawer = {
+          title: '新增角色',
+          show: true,
+          mode: 'add'
+      }
+      this.drawer = drawer
     }
   }
 }

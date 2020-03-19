@@ -27,14 +27,14 @@ export function getById(id){
 export function update(data){
   return request({
     url: '/sys/resource/'+data.id,
-    method: 'update',
+    method: 'put',
     data
   })
 }
 
 export function destroy(id){
   return request({
-    url: '/sys/resource/'+data.id,
+    url: '/sys/resource/'+id,
     method: 'delete'
   })
 }
