@@ -24,12 +24,12 @@
     >
       <el-table-column align="center" label="角色名">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          {{ scope.row.name }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="更新时间">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          {{ scope.row.updatedAt | formatDate }}
         </template>
       </el-table-column>
 
@@ -60,12 +60,19 @@
 import { getList } from '@/api/security/role'
 import addView from './add'
 import Pagination from '@/components/Pagination'
+import moment from 'moment'
+
 
 
 export default {
   components:{
      "role-add":addView,
      'pb-pagination': Pagination
+  },
+  filters: {
+    formatDate(value) {
+      return moment(value).format('YYYY-MM-DD HH:mm:ss')
+    }
   },
   data() {
     return {
@@ -92,7 +99,8 @@ export default {
     fetchData() {
       this.listLoading = true
       getList().then(response => {
-        this.list = response.data.items
+        const { data } = response
+        this.list = data.list
         this.listLoading = false
       })
     },

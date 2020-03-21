@@ -5,6 +5,18 @@
     </el-form-item>
 
     <el-form-item>
+      <el-tree
+        :data="nodes"
+        show-checkbox
+        default-expand-all
+        node-key="id"
+        ref="tree"
+        highlight-current
+        :props="defaultProps">
+      </el-tree>
+    </el-form-item>
+
+    <el-form-item>
       <el-button type="primary" @click="submitForm">保存</el-button>
     </el-form-item>
 
@@ -13,24 +25,42 @@
 
 <script>
 
-import { save, update, getById, getList } from '@/api/security/resource'
+import { getTree } from '@/api/security/resource'
+import { save ,getById, update } from '@/api/security/role'
+
 export default {
   props: ['id', 'mode'],
   data() {
     return {
       roleForm:{
-        name:''
+        name:'',
+        resourceIds:null
       },
       rules: {
         name: [
           { required: true, message: '角色名不能为空' }
+        ],
+        resourceIds: [
+          {required: true, message: '资源不能为空'}
         ]
       },
-      options:[]
+      nodes:[],
+      defaultProps: {
+        children: 'children',
+        label: 'name'
+      }
+    }
+  },
+  methods:{
+    getResourceTree(){
+      getTree().then(response => {
+        const { data } = response
+        this.nodes = data
+      })
     }
   },
   created() {
-    this.getParents();
+   this.getResourceTree();
     if (this.mode == 'update') {
       this.getDetail()
     }
@@ -40,6 +70,14 @@ export default {
     submitForm() {
       this.$refs['roleForm'].validate((valid) => {
         if (valid) {
+          var arr = this.$refs.tree.getCheckedKeys();
+          if(arr.length==0){
+            this.$message.error("请选择资源信息");
+            return;
+          }else{
+            this.roleForm.resourceIds = arr
+          }
+
           if (this.mode == 'update' && this.id) {
             this.updateForm()
           } else {
@@ -51,13 +89,13 @@ export default {
       })
     },
     saveForm() {
-      save(this.resForm).then(response => {
+      save(this.roleForm).then(response => {
         this.$message.success('保存成功!')
         this.$emit('createSuccess')
       })
     },
     updateForm() {
-      update(this.resForm).then(response => {
+      update(this.roleForm).then(response => {
         this.$message.success('更新成功!')
         this.$emit('createSuccess')
       })
@@ -69,11 +107,11 @@ export default {
         this.resForm = data
       })
     },
-    getParents(){
-        getList({parentNode:1}).then(response => {
-          const { data } = response
-          this.options = data
-        })
+    getResourceTree(){
+      getTree().then(response => {
+        const { data } = response
+        this.nodes = data
+      })
     }
   }
 }

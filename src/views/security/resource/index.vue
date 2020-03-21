@@ -158,4 +158,8 @@ export default{
    .btns-list .el-row{
        text-align: right;
    }
+   .resource-list{
+     border-right:1px solid #e8e8e8;
+     height:100vh;
+   }
 </style>
