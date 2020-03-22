@@ -48,15 +48,13 @@ export default {
       defaultProps: {
         children: 'children',
         label: 'name'
-      }
+      },
+      checkedIds:[]
     }
   },
-  methods:{
-    getResourceTree(){
-      getTree().then(response => {
-        const { data } = response
-        this.nodes = data
-      })
+  watch:{
+    checkedIds(val,oldVal){
+      this.$refs.tree.setCheckedKeys(val)
     }
   },
   created() {
@@ -66,7 +64,12 @@ export default {
     }
   },
   methods: {
-
+    getResourceTree(){
+      getTree().then(response => {
+        const { data } = response
+        this.nodes = data
+      })
+    },
     submitForm() {
       this.$refs['roleForm'].validate((valid) => {
         if (valid) {
@@ -103,8 +106,9 @@ export default {
     getDetail() {
       getById(this.id).then(response => {
         const { data } = response
-        data.visible = data.visible+''
-        this.resForm = data
+        this.checkedIds = data.resourceIds||[]
+        this.roleForm.resourceIds = data.resourceIds||[]
+        this.roleForm = data
       })
     },
     getResourceTree(){

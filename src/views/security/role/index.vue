@@ -33,9 +33,11 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" width="80" label="操作">
+      <el-table-column align="center" width="160" label="操作">
         <template slot-scope="scope">
-          <span>操作</span>
+          <el-button type="text" size="small" @click="show(scope.row)">查看</el-button>
+          <el-button type="text" size="small" @click="edit(scope.row)">编辑</el-button>
+          <el-button type="text" size="small" @click="destroy(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -50,15 +52,17 @@
       size="50%"
       ref="drawerBox"
     >
-      <role-add @createSuccess="onSuccess" :mode="drawer.mode" :id="id" ></role-add>
+      <role-add @createSuccess="onSuccess" :mode="drawer.mode" :id="id" v-if="drawer.view=='add'"></role-add>
+      <role-show  :id="id" v-if="drawer.view=='show'"></role-show>
     </el-drawer>
 
   </div>
 </template>
 
 <script>
-import { getList } from '@/api/security/role'
+import { getList , destroy } from '@/api/security/role'
 import addView from './add'
+import showView from './show'
 import Pagination from '@/components/Pagination'
 import moment from 'moment'
 
@@ -67,6 +71,7 @@ import moment from 'moment'
 export default {
   components:{
      "role-add":addView,
+     "role-show": showView,
      'pb-pagination': Pagination
   },
   filters: {
@@ -81,7 +86,8 @@ export default {
       drawer:{
           title:'',
           show: false,
-          mode: ''
+          mode: '',
+          view:''
       },
       query: {
         pageNo:1,
@@ -98,9 +104,10 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList().then(response => {
+      getList(this.query).then(response => {
         const { data } = response
         this.list = data.list
+        this.total = data.total
         this.listLoading = false
       })
     },
@@ -118,15 +125,52 @@ export default {
     },
     search(){
       this.query.pageNo = 1
+      this.list = []
       this.fetchData()
     },
     add(){
       let drawer = {
           title: '新增角色',
           show: true,
-          mode: 'add'
+          mode: 'add',
+          view: 'add'
       }
       this.drawer = drawer
+    },
+    show(data){
+      this.id = data.id;
+      let drawer = {
+          title: '角色详情',
+          show: true,
+          view: 'show'
+
+      }
+      this.drawer = drawer
+    },
+    edit(data){
+      this.id = data.id
+      let drawer = {
+          title: '编辑角色',
+          show: true,
+          mode: 'update',
+          view: 'add'
+      }
+      this.drawer = drawer
+    },
+    destroy(data){
+      this.$confirm('是否确认删除此记录?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        destroy(data.id).then(response => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+          this.fetchData()
+        })
+      })
     }
   }
 }
