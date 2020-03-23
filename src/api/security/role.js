@@ -9,6 +9,14 @@ export function getList(params) {
   })
 }
 
+export function getAllRoles(params){
+  return request({
+    url: '/sys/role/all',
+    method: 'get',
+    params: params
+  })
+}
+
 export function save(data){
   return request({
     url: '/sys/role',

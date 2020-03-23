@@ -15,6 +15,16 @@
     <el-form-item label="手机号" prop="mobile">
       <el-input v-model.number="userForm.mobile" maxlength="11" />
     </el-form-item>
+    <el-form-item label="角色" prop="roleIds" class="full-select">
+        <el-select v-model="userForm.roleIds" filterable multiple placeholder="请选择角色">
+          <el-option
+            v-for="item in roles"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+        </el-select>
+    </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm">保存</el-button>
     </el-form-item>
@@ -24,6 +34,7 @@
 <script>
 
 import { save, update, getById, userNameCheck } from '@/api/user'
+import { getAllRoles } from '@/api/security/role'
 export default {
   props: ['id', 'mode'],
   data() {
@@ -63,8 +74,10 @@ export default {
         password: '',
         confirmPassword: '',
         mobile: '',
-        role: 'admin'
+        role: 'admin',
+        roleIds:null
       },
+      roles:[],
       rules: {
         name: [
           { required: true, message: '姓名不能为空' }
@@ -82,18 +95,28 @@ export default {
         ],
         mobile: [
           { required: true, message: '手机号不能为空' }
+        ],
+        roleIds: [
+          {required: true , message: '请为用户分配角色'}
         ]
 
       }
     }
   },
   created() {
+    this.getRoles()
     if (this.mode == 'update') {
       this.getDetail()
     }
   },
   methods: {
 
+    getRoles(){
+        getAllRoles().then(response => {
+          const { data }= response
+          this.roles = data
+        })
+    },
     submitForm() {
       this.$refs['userForm'].validate((valid) => {
         if (valid) {
@@ -129,3 +152,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .full-select .el-select{
+    width:100%;
+  }
+</style>
