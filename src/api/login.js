@@ -22,3 +22,10 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function getPermissions() {
+  return request({
+    url: '/auth/permissions',
+    method: 'GET'
+  })
+}

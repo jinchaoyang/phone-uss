@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/login'
+import { login, logout, getInfo, getPermissions } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -76,6 +76,18 @@ const actions = {
       commit('RESET_STATE')
       resolve()
     })
+  },
+
+  getPermissions({ commit }){
+    return new Promise((resolve,reject) => {
+      getPermissions(state.token).then(response => {
+         const { data } = response
+         console.log(data);
+         resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
 }
 
@@ -85,4 +97,3 @@ export default {
   mutations,
   actions
 }
-
