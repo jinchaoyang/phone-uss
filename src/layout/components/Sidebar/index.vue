@@ -12,7 +12,7 @@
         :collapse-transition="false"
         mode="vertical"
       >
-        <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
+        <sidebar-item v-for="route in routes" :key="route.id" :item="route" />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -28,10 +28,13 @@ export default {
   components: { SidebarItem, Logo },
   computed: {
     ...mapGetters([
-      'sidebar'
+      'sidebar',
+      'menus'
     ]),
     routes() {
-      return this.$router.options.routes
+      //return this.$router.options.routes
+      console.log(this.menus)
+     return this.menus
     },
     activeMenu() {
       const route = this.$route

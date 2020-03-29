@@ -6,7 +6,8 @@ const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+    menus:[]
   }
 }
 
@@ -24,6 +25,9 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_MENU: (state, menus) => {
+    state.menus = menus
   }
 }
 
@@ -82,7 +86,7 @@ const actions = {
     return new Promise((resolve,reject) => {
       getPermissions(state.token).then(response => {
          const { data } = response
-         console.log(data);
+         commit('SET_MENU',data)
          resolve()
       }).catch(error => {
         reject(error)
