@@ -108,7 +108,9 @@
       <tenant-setting :id="tenantId" @onSuccess="onSuccess" v-if="drawer.view=='setting'"/>
       <tenant-charge  :id="tenantId" @onSuccess="onSuccess" v-if="drawer.view=='charge'"/>
       <tenant-reserve  :id="tenantId" @onSuccess="onSuccess" v-if="drawer.view=='reserve'"/>
-      
+      <tenant-account  :id="tenantId" @onSuccess="onSuccess" v-if="drawer.view=='account'"/>
+
+
 
     </el-drawer>
 
@@ -134,6 +136,7 @@ import tenantShow from './show'
 import tenantSetting from './setting'
 import tenantCharge from './charge'
 import tenantReserve from './reserve'
+import tenantAccount from './account'
 
 export default {
   components: {
@@ -142,7 +145,8 @@ export default {
     'tenant-show': tenantShow,
     'tenant-setting': tenantSetting,
     'tenant-charge': tenantCharge,
-    'tenant-reserve': tenantReserve
+    'tenant-reserve': tenantReserve,
+    'tenant-account': tenantAccount
   },
   filters: {
     statusFilter(status) {
@@ -167,7 +171,7 @@ export default {
         2: '内网'
       }
       return statusMap[tenantType]
-    }  
+    }
 },
   data() {
     return {
@@ -278,6 +282,9 @@ export default {
        drawer.withHeader = false;
      }else if(view == 'reserve'){
        drawer.title='账户冲账';
+       drawer.size='40%';
+     }else if(view=='account'){
+       drawer.title='登录账户';
        drawer.size='40%';
      }
      this.drawer = drawer

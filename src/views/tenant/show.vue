@@ -29,7 +29,7 @@
         <el-form-item label="联系邮箱" prop="email">
           <span>{{ tenant.email }}</span>
         </el-form-item>
-       
+
         <el-form-item label="备注" prop="remark">
           <span>{{ tenant.remark }}</span>
         </el-form-item>
@@ -60,6 +60,8 @@
           <el-button type="info" size="small">禁用账号</el-button>
           <el-button type="success" size="small" @click="toCharge" :id="id">账户充值</el-button>
           <el-button type="primary" size="small" @click="toReserve" :id="id">账户冲账</el-button>
+          <el-button type="warning" size="small" @click="toAccountSetting" :id="id">管理账号</el-button>
+
       </div>
       </div>
     </el-tab-pane>
@@ -132,7 +134,7 @@ export default {
       }
       var pattern = /(?=((?!\b)\d{3})+$)/g
       return val.replace(pattern, ',')+sub
-    }  
+    }
   },
   props: ['id'],
   data() {
@@ -173,7 +175,14 @@ export default {
     },
     toReserve(){
       this.$emit('onLoad',{type:'reserve'});
+    },
+    /**
+     * 管理账号设置
+     */
+    toAccountSetting(){
+       this.$emit('onLoad',{type:'account'})
     }
+
 
   }
 }

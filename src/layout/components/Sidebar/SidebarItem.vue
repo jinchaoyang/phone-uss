@@ -60,7 +60,14 @@ export default {
       if(!path.trim()){
         return "javascript:;"
       }
-      return path;
+      var arr = path.split("/");
+      if(arr.length>1){
+        return arr[arr.length-1];
+      }else{
+        return arr[0];
+      }
+      return routePath;
+
     }
   }
 }

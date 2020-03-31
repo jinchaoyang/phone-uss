@@ -33,7 +33,6 @@ export default {
     ]),
     routes() {
       //return this.$router.options.routes
-      console.log(this.menus)
      return this.menus
     },
     activeMenu() {
