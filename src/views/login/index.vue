@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">运营管理服务平台</h3>
+        <h3 class="title">企业话务管理平台</h3>
       </div>
 
       <el-form-item prop="username">
@@ -13,7 +13,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="登录名"
+          placeholder="登录名@企业编号"
           name="username"
           type="text"
           tabindex="1"

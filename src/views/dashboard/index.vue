@@ -4,26 +4,23 @@
       <el-col :span="8">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>名单统计</span>
+            <span>账户信息</span>
 
           </div>
           <div class="text item">
-            <span class="counter-title warning">黑名单</span>
+            <span class="counter-title warning">账户余额</span>
             <span class="counter-text warning">{{ stat.black | numberFormat }}</span>
 
           </div>
           <div class="text item">
-            <span class="counter-title success">白名单</span>
+            <span class="counter-title success">实时余额</span>
             <span class="counter-text success">{{ stat.vip | numberFormat }}</span>
           </div>
           <div class="text item">
-            <span class="counter-title warning">当日新增黒名单</span>
+            <span class="counter-title warning">当日消费</span>
             <span class="counter-text warning">{{ incr.black | numberFormat }}</span>
           </div>
-          <div class="text item">
-            <span class="counter-title success">当日新增白名单</span>
-            <span class="counter-text success">{{ incr.vip | numberFormat }}</span>
-          </div>
+       
         </el-card>
       </el-col>
       <el-col :span="8">
