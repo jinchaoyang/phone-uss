@@ -10,7 +10,9 @@ import securityRoute from './modules/security'
 
 import toolRoute from './modules/tools'
 
-import tenantRoute from './modules/tenant'
+import cdrRouter from './modules/cdr'
+
+import tradeRouter from './modules/trade'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -55,14 +57,16 @@ export const constantRoutes = [
     redirect: '/dashboard',
     children: [{
       path: 'dashboard',
-      name: '概述',
+      name: '工作台',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '概述', icon: 'dashboard' }
+      meta: { title: '工作台', icon: 'dashboard' }
     }]
   },
+  cdrRouter,
   toolRoute,
-  tenantRoute,
+  tradeRouter,
   securityRoute,
+  
   { path: '*', redirect: '/404', hidden: true }
 ]
 

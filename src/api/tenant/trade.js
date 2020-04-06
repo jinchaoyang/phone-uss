@@ -10,6 +10,14 @@ export function getList(params) {
 }
 
 
+export function getTradeById(tradeId){
+   return request({
+     url: '/tenant/trade/'+tradeId,
+     method: 'get'
+   })
+}
+
+
 export function save(data){
     return request({
         url: '/tenant/trade',

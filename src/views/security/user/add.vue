@@ -34,7 +34,6 @@
 <script>
 
 import { save, update, getById, userNameCheck } from '@/api/user'
-import { getAllRoles } from '@/api/security/role'
 export default {
   props: ['id', 'mode'],
   data() {
@@ -74,10 +73,12 @@ export default {
         password: '',
         confirmPassword: '',
         mobile: '',
-        role: 'admin',
-        roleIds:null
+        roleIds:[]
       },
-      roles:[],
+      roles:[
+        {id:"ADMIN",name:"系统管理员"},
+        {id:"EMPLOYEE",name:"普通用户"}
+        ],
       rules: {
         name: [
           { required: true, message: '姓名不能为空' }
@@ -104,22 +105,17 @@ export default {
     }
   },
   created() {
-    this.getRoles()
     if (this.mode == 'update') {
       this.getDetail()
     }
   },
   methods: {
 
-    getRoles(){
-        getAllRoles().then(response => {
-          const { data }= response
-          this.roles = data
-        })
-    },
+
     submitForm() {
       this.$refs['userForm'].validate((valid) => {
         if (valid) {
+          this.userForm.role = this.userForm.roleIds.join(",")
           if (this.mode == 'update' && this.id) {
             this.updateForm()
           } else {

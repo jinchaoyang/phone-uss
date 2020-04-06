@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-    <el-alert :title="title" type="success" show-icon :closable="false" />
 
     <div class="box">
       <el-row :gutter="20">
@@ -12,7 +11,7 @@
               v-model="phone"
               type="textarea"
               :rows="20"
-              placeholder="请输入号码,每行一个。每次最多验证20个号码"
+              placeholder="请输入号码,每行一个。每次最多验证1个号码"
             />
 
             <el-button type="primary" class="check-btn" @click="verify">号码校验</el-button>
@@ -35,7 +34,7 @@
               />
               <el-table-column
                 prop="code"
-                label="黑名单"
+                label="白名单"
                 align="center"
               >
                 <template slot-scope="scope">
@@ -45,25 +44,7 @@
             </el-table>
           </div>
         </el-col>
-        <el-col :span="8">
-          <div class="grid-content">
-            <label>上传白名单</label>
-            <el-upload
-              class="upload-cdr"
-              drag
-              :data="paramList"
-              accept=".txt"
-              name="uploadFile"
-              :action="uploadUrl"
-              :on-success="onSuccess"
-            >
-              <i class="el-icon-upload" />
-              <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-              <div slot="tip" class="el-upload__tip">只能上传txt文件，且不超过10M</div>
-            </el-upload>
 
-          </div>
-        </el-col>
       </el-row>
     </div>
 
@@ -91,11 +72,7 @@ export default {
       uploadUrl: process.env.VUE_APP_BASE_API + '/api/v1.0/black/upload'
     }
   },
-  computed: {
-    title() {
-      return '当前白名单总数：' + this.total
-    }
-  },
+
   created() {
     this.stat()
   },
@@ -108,7 +85,7 @@ export default {
       }
       phones = phones.replace(/\n/g, ',')
       let arr = phones.split(',')
-      arr = arr.slice(0, 20)
+      arr = arr.slice(0, 1)
       const phones_str = arr.join(',')
       const params = { phones: phones_str, type: 0 }
       check(params).then(response => {

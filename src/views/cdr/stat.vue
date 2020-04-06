@@ -49,12 +49,14 @@ export default {
       listLoading: true
     }
   },
-
+  created(){
+    this.fetchData();
+  },
   methods: {
-    fetchData(ip,tenantType) {
+    fetchData() {
       this.listLoading = true
       this.loaded = true
-      stat({ ip: ip , tenantType: tenantType}).then(response => {
+      stat().then(response => {
         const { data } = response
         this.datas = data.reverse().slice(0, 15)
         this.listLoading = false

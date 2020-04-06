@@ -1,5 +1,5 @@
 import { login, logout, getInfo, getPermissions } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken, setTenantType } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
@@ -7,7 +7,7 @@ const getDefaultState = () => {
     token: getToken(),
     name: '',
     avatar: '',
-    menus:[]
+    tenantType:''
   }
 }
 
@@ -28,18 +28,23 @@ const mutations = {
   },
   SET_MENU: (state, menus) => {
     state.menus = menus
+  },
+  SET_TENANT_TYPE: (state,tenantType) => {
+    state.tenantType = tenantType
   }
 }
 
 const actions = {
   // 用户登录
   login({ commit }, userInfo) {
-    const { username, password } = userInfo
+    const { username, password ,tenantCode } = userInfo
     return new Promise((resolve, reject) => {
-      login({ userName: username.trim(), password: password }).then(response => {
+      login({ userName: username.trim(), password: password ,tenantCode: tenantCode }).then(response => {
         const { data } = response
         commit('SET_TOKEN', data.token)
         setToken(data.token)
+        commit('SET_TENANT_TYPE',data.tenantType)
+        setTenantType(data.tenantType)
         resolve()
       }).catch(error => {
         reject(error)

@@ -54,8 +54,12 @@ export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!value.trim()) {
+      value = value.trim()||"";
+      let len = value.length;
+      if (!value) {
         callback(new Error('请输入用户名'))
+      }else if(value.indexOf("@")<=0 || value.indexOf('@')==len){
+        callback(new Error("用户名格式不正确"))
       } else {
         callback()
       }
@@ -69,6 +73,7 @@ export default {
     }
     return {
       loginForm: {
+        tenantCode:'',
         username: '',
         password: ''
       },
@@ -104,7 +109,9 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('login/login', this.loginForm).then(() => {
+          let arr = this.loginForm.username.split("@");
+          let body={username:arr[0],tenantCode:arr[1],password:this.loginForm.password};
+          this.$store.dispatch('login/login', body).then(() => {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {
