@@ -46,7 +46,7 @@
       </el-table-column>
       <el-table-column label="是否白名单" width="220"  align="center">
         <template slot-scope="scope">
-          {{ scope.row.result==1?'是':否 }}
+          {{ scope.row.result==1?'是':'否' }}
         </template>
       </el-table-column>
       <el-table-column label="呼叫标识"  align="center">
