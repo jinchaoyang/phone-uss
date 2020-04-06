@@ -19,3 +19,19 @@ export function stat(params) {
     params: params
   })
 }
+
+export function getBlackList(params){
+  return request({
+    url: '/cdr/black',
+    method: 'get',
+    params: params
+  })
+}
+
+export function getVipList(params){
+  return request({
+    url: '/cdr/vip',
+    method: 'get',
+    params: params
+  })
+}

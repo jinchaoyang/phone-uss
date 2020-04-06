@@ -33,23 +33,23 @@
     >
       <el-table-column align="center" label="呼叫时间" width="220">
         <template slot-scope="scope">
-          {{ scope.row.name }}
+          {{ scope.row.createTime | dateFormat}}
         </template>
       </el-table-column>
 
       <el-table-column label="被叫号码" width="220" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.userName }}</span>
+          <span>{{ scope.row.phone }}</span>
         </template>
       </el-table-column>
       <el-table-column label="是否黑名单" width="220" align="center">
         <template slot-scope="scope">
-          {{ scope.row.mobile }}
+          {{ scope.row.result==1?'是':'否' }}
         </template>
       </el-table-column>
       <el-table-column label="呼叫标识"  align="center">
         <template slot-scope="scope">
-          {{ scope.row.mobile }}
+          {{ scope.row.callId }}
         </template>
       </el-table-column>
 
@@ -62,13 +62,14 @@
 </template>
 
 <script>
-import { getList, destroy } from '@/api/user'
+import { getBlackList } from '@/api/tenant'
+
+import moment from 'moment'
 
 import Pagination from '@/components/Pagination'
 
 export default {
   components: {
-
     'pb-pagination': Pagination
   },
 
@@ -80,9 +81,9 @@ export default {
       query: {
         callee:null ,
         pageNo: 1,
-        pageSize: 15
+        pageSize: 10,
+        isHit:null
       },
-      isHit:null,
       options:[
         {id:1,name:"是"},
         {id:0,name:"否"},
@@ -90,18 +91,21 @@ export default {
     }
 
   },
+  filters:{
+    dateFormat(time){
+      return moment(time).format("YYYY-MM-DD HH:mm:ss")
+    }
+  },
   created() {
     this.fetchData()
   },
   methods: {
     fetchData() {
       this.listLoading = true
-      getList(this.query).then(response => {
+      getBlackList(this.query).then(response => {
         const { data } = response
-        this.list = data.list
-        this.total = data.total
-        this.query.pageNo = data.pageNum
-        this.query.pageSize = data.pageSize
+        this.list = data.content
+        this.total = data.totalElements
         this.listLoading = false
       })
     },

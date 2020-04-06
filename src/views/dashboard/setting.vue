@@ -1,12 +1,12 @@
 <template>
-  <el-form ref="settingForm" :model="settingForm" status-icon  label-width="100px" class="drawer-form">
-    <el-form-item label="网关IP" prop="sipIp">
+  <el-form ref="settingForm" :model="settingForm" status-icon  label-width="120px" class="drawer-form">
+    <el-form-item label="落地网关IP" prop="sipIp">
       <el-input v-model="settingForm.sipIp" type="text" autocomplete="off" maxlength="16" />
     </el-form-item>
-    <el-form-item label="网关端口" prop="sipPort">
+    <el-form-item label="落地端口" prop="sipPort">
       <el-input v-model="settingForm.sipPort" type="text" autocomplete="off" maxlength="6" />
     </el-form-item>
-    <el-form-item label="对接IP" prop="toIp">
+    <el-form-item label="对接网关IP" prop="toIp">
       <el-input v-model="settingForm.toIp" type="text" autocomplete="off" maxlength="16" />
     </el-form-item>
     <el-form-item label="对接端口" prop="toPort">

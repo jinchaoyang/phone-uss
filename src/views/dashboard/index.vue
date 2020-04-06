@@ -36,17 +36,17 @@
 
           </div>
           <div class="text item">
-            <span class="counter-title success">网关IP</span>
+            <span class="counter-title success">落地网关IP</span>
             <span class="counter-text success">{{ setting.sipIp }}</span>
 
           </div>
           <div class="text item">
-            <span class="counter-title warning">网关端口</span>
+            <span class="counter-title warning">落地端口</span>
             <span class="counter-text warning">{{ setting.sipPort}}</span>
 
           </div>
           <div class="text item">
-            <span class="counter-title success">对接IP</span>
+            <span class="counter-title success">对接网关IP</span>
             <span class="counter-text success">{{ setting.toIp }}</span>
           </div>
           <div class="text item">

@@ -20,7 +20,7 @@
 
 
         <el-form-item class="form-btns">
-          <el-button type="primary" size="small" @click="fetchData">查询</el-button>
+          <el-button type="primary" size="small" @click="search"></el-button>
         </el-form-item>
       </el-form>
 
@@ -35,23 +35,23 @@
     >
       <el-table-column align="center" label="呼叫时间" width="220">
         <template slot-scope="scope">
-          {{ scope.row.name }}
+          {{ scope.row.createTime | dateFormat }}
         </template>
       </el-table-column>
 
       <el-table-column label="被叫号码" width="220" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.userName }}</span>
+          <span>{{ scope.row.phone }}</span>
         </template>
       </el-table-column>
       <el-table-column label="是否白名单" width="220"  align="center">
         <template slot-scope="scope">
-          {{ scope.row.mobile }}
+          {{ scope.row.result==1?'是':否 }}
         </template>
       </el-table-column>
       <el-table-column label="呼叫标识"  align="center">
         <template slot-scope="scope">
-          {{ scope.row.mobile }}
+          {{ scope.row.callId }}
         </template>
       </el-table-column>
 
@@ -64,8 +64,8 @@
 </template>
 
 <script>
-import { getList, destroy } from '@/api/user'
-
+import { getVipList } from '@/api/tenant'
+import moment from 'moment'
 import Pagination from '@/components/Pagination'
 
 export default {
@@ -82,14 +82,19 @@ export default {
       query: {
         callee:null ,
         pageNo: 1,
-        pageSize: 15
+        pageSize: 10,
+        isHist:null,
       },
-      isHit:null,
       options:[
         {id:1,name:"是"},
         {id:0,name:"否"},
       ]
 
+    }
+  },
+  filters:{
+    dateFormat(time){
+      return moment(time).format("YYYY-MM-DD HH:mm:ss")
     }
   },
   created() {
@@ -98,14 +103,20 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList(this.query).then(response => {
+      this.query.pageNo = 1;
+      getVipList(this.query).then(response => {
         const { data } = response
-        this.list = data.list
-        this.total = data.total
+        this.list = data.content
+        this.total = data.totalElements
         this.query.pageNo = data.pageNum
         this.query.pageSize = data.pageSize
         this.listLoading = false
       })
+    },
+    search(){
+      this.query.pageNo = 1
+      this.query.pageSize = 10
+      this.fetchData()
     },
     pageChange(data) {
       if (data.pageNo) {
