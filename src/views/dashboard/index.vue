@@ -45,13 +45,18 @@
             <span class="counter-text warning">{{ setting.sipPort}}</span>
 
           </div>
+		  <div class="text item">
+		    <span class="counter-title success">本地网关端口</span>
+		    <span class="counter-text success">{{ setting.localPort}}</span>
+
+		  </div>
           <div class="text item">
-            <span class="counter-title success">对接网关IP</span>
-            <span class="counter-text success">{{ setting.toIp }}</span>
+            <span class="counter-title warning">对接网关IP</span>
+            <span class="counter-text warning">{{ setting.toIp }}</span>
           </div>
           <div class="text item">
-            <span class="counter-title warning">对接端口</span>
-            <span class="counter-text warning">{{ setting.toPort }}</span>
+            <span class="counter-title success">对接端口</span>
+            <span class="counter-text success">{{ setting.toPort }}</span>
           </div>
 
         </el-card>
