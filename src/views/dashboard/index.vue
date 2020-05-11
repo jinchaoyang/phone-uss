@@ -46,7 +46,7 @@
 
           </div>
 		  <div class="text item">
-		    <span class="counter-title success">本地网关端口</span>
+		    <span class="counter-title success">本地网关</span>
 		    <span class="counter-text success">{{ setting.localPort}}</span>
 
 		  </div>
