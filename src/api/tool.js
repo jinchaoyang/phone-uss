@@ -16,3 +16,10 @@ export function stat(params) {
     params: params
   })
 }
+
+export function filterProgress (params) {
+	return request({
+	  url: '/api/v1.0/vip/progress/'+params.taskId,
+	  method: 'get'
+	})
+}
