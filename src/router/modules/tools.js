@@ -26,8 +26,15 @@ const toolRoute = {
     {
       path: '/filter',
       component: () => import('@/views/tool/filter'),
-      name: '号码过滤',
-      meta: { title: '号码过滤', noCache: true }
+      name: '区域号码过滤',
+      meta: { title: '区域号码过滤', noCache: true }
+
+    },
+    {
+      path: '/vipFilter',
+      component: () => import('@/views/tool/vipFilter'),
+      name: '空号过滤',
+      meta: { title: '空号过滤', noCache: true }
 
     }
 
