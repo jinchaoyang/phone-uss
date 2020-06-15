@@ -4,13 +4,13 @@
       <el-input v-model="settingForm.sipIp" type="text" autocomplete="off" maxlength="128" />
     </el-form-item>
     <el-form-item label="落地端口" prop="sipPort">
-      <el-input v-model="settingForm.sipPort" type="text" autocomplete="off" maxlength="6" />
+      <el-input v-model="settingForm.sipPort" type="text" autocomplete="off" maxlength="36" />
     </el-form-item>
     <el-form-item label="对接网关IP" prop="toIp">
       <el-input v-model="settingForm.toIp" type="text" autocomplete="off" maxlength="128" />
     </el-form-item>
     <el-form-item label="对接端口" prop="toPort">
-      <el-input v-model="settingForm.toPort" type="text" autocomplete="off" maxlength="6" />
+      <el-input v-model="settingForm.toPort" type="text" autocomplete="off" maxlength="36" />
     </el-form-item>
 
     <el-form-item>
