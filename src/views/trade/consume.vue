@@ -77,7 +77,7 @@ export default {
       return moment(value).format('YYYY-MM-DD HH:mm:ss')
     },
     amountFormat(value){
-      value = value / 10000
+      value = value / 100000
       var pattern = /(?=((?!\b)\d{3})+$)/g
       return val.replace(pattern, ',')
     }

@@ -137,7 +137,7 @@ export default {
   },
   filters: {
     numberFormat(val) {
-      val = ((val||0) /10000)+''
+      val = ((val||0) /100000)+''
       var pattern = /(?=((?!\b)\d{3})+$)/g
       return val.replace(pattern, ',')
     }
