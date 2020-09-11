@@ -10,6 +10,12 @@ const cdrRouter = {
   },
   children: [
     {
+      path: '/qc',
+      component: () => import('@/views/cdr/qc'),
+      name: '质检记录',
+      meta: { title: '质检记录', noCache: true }
+    },
+    {
       path: '/blackCdr',
       component: () => import('@/views/cdr/black'),
       name: '黑名单记录',
