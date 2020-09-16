@@ -110,9 +110,9 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="错误原因"  align="center">
+      <el-table-column label="录音时长(秒)"  align="center">
         <template slot-scope="scope">
-          {{ scope.row.err }}
+          {{ scope.row.length }}
         </template>
       </el-table-column>
 
