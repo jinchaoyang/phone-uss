@@ -46,7 +46,7 @@ export default {
       taskId: null,
       interval:null,
       percent:0,
-      uploadUrl: process.env.VUE_APP_BASE_API + '/api/v1.0/vip/filter'
+      uploadUrl: process.env.VUE_APP_OSS_API + '/api/v1.0/vip/filter'
     }
   },
   created() {
@@ -80,7 +80,7 @@ export default {
         let percent = (complete*100/total).toFixed(0)
         this.percent = percent
         if(complete>=total-1){
-          that.filePath = process.env.VUE_APP_BASE_API + '/api/v1.0/vip/download?taskId='+that.taskId
+          that.filePath = process.env.VUE_APP_OSS_API + '/api/v1.0/vip/download?taskId='+that.taskId
           clearInterval(that.interval);
         }
       })

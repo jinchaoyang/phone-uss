@@ -19,6 +19,7 @@ export function stat(params) {
 
 export function filterProgress (params) {
 	return request({
+    baseURL: process.env.VUE_APP_OSS_API,
 	  url: '/api/v1.0/vip/progress/'+params.taskId,
 	  method: 'get'
 	})
