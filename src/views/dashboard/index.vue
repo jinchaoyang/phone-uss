@@ -17,10 +17,10 @@
             <span class="counter-text warning">{{ tenant.balance | numberFormat }}</span>
 
           </div>
-          <div class="text item">
+          <!-- <div class="text item">
             <span class="counter-title success">实时余额</span>
             <span class="counter-text success">{{ tenant.rtBalance | numberFormat }}</span>
-          </div>
+          </div> -->
           <div class="text item">
             <span class="counter-title warning">当日消费</span>
             <span class="counter-text warning">{{ tenant.consume| numberFormat }}</span>
