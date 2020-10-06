@@ -64,7 +64,9 @@
           <el-button type="primary" size="small" @click="search">查询</el-button>
         </el-form-item>
       </el-form>
-
+    <div>
+      <audio :src="cdr.url" controls autoplay  id="player"></audio>
+    </div>
     </div>
     <el-table
       :data="list"
@@ -126,9 +128,7 @@
 
     </el-table>
     <pb-pagination :page-no="query.pageNo" :page-size="query.pageSize" :total="total" @pageChange="pageChange" />
-    <div>
-      <audio :src="cdr.url" controls autoplay  id="player"></audio>
-    </div>
+   
 
     <el-drawer
       title="话单详情"
