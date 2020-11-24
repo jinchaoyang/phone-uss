@@ -85,7 +85,7 @@
       </el-table-column>
       <el-table-column label="主叫号码" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.callee }}</span>
+          <span>{{ scope.row.caller }}</span>
         </template>
       </el-table-column>
 
