@@ -3,8 +3,11 @@
 
     <div class="query-form-box">
       <el-form :inline="true" :model="query" class="demo-form-inline">
-        <el-form-item label="号码">
-          <el-input v-model="query.callee" placeholder="号码" />
+        <el-form-item label="主叫号码">
+          <el-input v-model="query.caller" placeholder="主叫号码" />
+        </el-form-item>
+        <el-form-item label="被叫号码">
+          <el-input v-model="query.callee" placeholder="被叫号码" />
         </el-form-item>
         <el-form-item label="质检状态">
           <el-select v-model="query.status" placeholder="全部" clearable="">
@@ -78,6 +81,11 @@
       <el-table-column align="center" label="呼叫时间" >
         <template slot-scope="scope">
           {{ scope.row.callAt | dateFormat}}
+        </template>
+      </el-table-column>
+      <el-table-column label="主叫号码" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.callee }}</span>
         </template>
       </el-table-column>
 
