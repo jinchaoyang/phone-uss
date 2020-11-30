@@ -67,7 +67,7 @@
           <el-button type="primary" size="small" @click="search">查询</el-button>
         </el-form-item>
       </el-form>
-    <div>
+    <div class="player-box">
       <audio :src="cdr.url" controls autoplay  id="player"></audio>
     </div>
     </div>
@@ -104,11 +104,7 @@
           {{ scope.row.status | statusFilter }}
         </template>
       </el-table-column>
-      <el-table-column label="敏感词"  align="center">
-        <template slot-scope="scope">
-          {{ scope.row.tag }}
-        </template>
-      </el-table-column>
+   
        <el-table-column label="主叫网关"  align="center">
         <template slot-scope="scope">
           {{ scope.row.callerIp }}
@@ -117,6 +113,11 @@
          <el-table-column label="被叫网关"  align="center">
         <template slot-scope="scope">
           {{ scope.row.calleeIp }}
+        </template>
+      </el-table-column>
+      <el-table-column label="敏感词"  align="center">
+        <template slot-scope="scope">
+          {{ scope.row.tag }}
         </template>
       </el-table-column>
 
@@ -281,6 +282,13 @@ export default {
       width:100%;
     }
 }
+
+.player-box{
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
 
 
 </style>
