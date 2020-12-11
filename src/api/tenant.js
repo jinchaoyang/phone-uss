@@ -13,7 +13,7 @@ export function getById(id) {
 export function stat(params) {
   let tenantType = getTenantType();
   return request({
-    baseURL: tenantType==2?process.env.VUE_APP_BASE_API:process.env.VUE_APP_EXTERNAL_API,
+    baseURL: tenantType==2?process.env.VUE_APP_BASE_API:process.env.VUE_APP_EXTERNAL_USS,
     url: '/tenant/stat',
     method: 'get',
     params: params
